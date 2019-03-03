@@ -1,17 +1,18 @@
 hb18742
 jr18292
 
-Examples:
+# Web Technologies
 
-#[example1](https://www.lamaison-arting.com/?from=baidu)
+## website Examples:
 
-#[example1](http://www.dyrs.com.cn/)
+大公司：
+[example1](https://www.lamaison-arting.com/?from=baidu) 
+[example2](http://www.dyrs.com.cn/)
 
-#[example1](http://www.hb-hezong.com/)
-
-#[example1](http://xgzwzs.com/)
-
-#[example1](http://www.xg-aohua.com/)
+小公司：
+[example3](http://www.hb-hezong.com/) 
+[example4](http://xgzwzs.com/) 
+[example5](http://www.xg-aohua.com/)
 
 __xavier TODO:__
 
@@ -20,11 +21,13 @@ __xavier TODO:__
 1.先写好主页基本框架（html）和副页框架（html）
 初步设计： 主页： 公司标题+搜索功能+各模块标题+成品展示+联系方式   due：8/3
            副页（少于6个）：相同设计+模块展示
+           
 2.加css加JavaScript
 
 3.加特殊功能 。。 再说
-后端：
-。。。。再说
+
+后端：。。。。再说
+
 
 
 __胸肌哥 TODO:__
