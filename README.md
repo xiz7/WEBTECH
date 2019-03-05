@@ -35,3 +35,6 @@ __胸肌哥 TODO:__
 2. (due:3.6) 然后和我father确定网页的展示信息： 分哪几个模块 展示什么信息
 3. 网页设计分析（一起），分工
 4. pair programming
+
+# 效果图及简介：
+https://pan.baidu.com/s/1O0E7yK97L-PGEOpXC0Yfuw  密码 z3un
