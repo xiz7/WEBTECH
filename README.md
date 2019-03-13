@@ -6,13 +6,13 @@ jr18292
 ## website Examples:
 
 大公司：
-[example1](https://www.lamaison-arting.com/?from=baidu) 
-[example2](http://www.dyrs.com.cn/)
+[美颂雅庭](https://www.lamaison-arting.com/?from=baidu) 
+[东易日盛](http://www.dyrs.com.cn/)
 
 小公司：
-[example3](http://www.hb-hezong.com/) 
-[example4](http://xgzwzs.com/) 
-[example5](http://www.xg-aohua.com/)
+[合纵装饰](http://www.hb-hezong.com/) 
+[正文装饰](http://xgzwzs.com/) 
+[澳华装饰](http://www.xg-aohua.com/)
 
 __xavier TODO:__
 
