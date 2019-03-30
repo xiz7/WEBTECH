@@ -165,6 +165,8 @@
 			{
 				display: block;
 				width: 100%;
+    max-height: 66%;
+    min-height: 66%;
 				margin: 0 0 2em 0;
 			}
 			
@@ -237,6 +239,8 @@
 		ul.style img {
 			float: left;
 			margin-right: 20px;
+            width: 80px;
+            height: 80px;
 		}
 		
 		ul.style p {
@@ -291,7 +295,7 @@
 	#header
 	{
 		position: relative;
-		background: #2a2f27 url(../images/banner.jpg) no-repeat;
+		background: #2a2f27 url(../images/background.jpg) no-repeat;
 		background-size: cover;
 	}
 
@@ -300,12 +304,14 @@
 	}
 	
 	#nav
-	{
+	{       
 	}
 
 		#nav ul
 		{
-			margin: 0;
+            margin:0;
+            position:sticky;
+          top: 0;
 		}
 	
 /*********************************************************************************/
