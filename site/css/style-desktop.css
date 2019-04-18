@@ -49,6 +49,7 @@
 		#logo h1
 		{
 			color: #FFF;
+            font-family:monospace;
 		}
 	
 		#logo h1 a
@@ -78,7 +79,11 @@
 /*********************************************************************************/
 
 	#nav
-	{
+	{        
+        display:flex;
+        width:calc(100% - 147px);
+        flex-wrap:nowrap;
+        justify-content:space-between
 	}
 
 		#nav > ul > li
