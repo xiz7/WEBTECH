@@ -300,8 +300,11 @@
 	nav
 	{      
     	position: fixed;
-      	width: 100%;
-      	line-height: 60px;
+/*      	width: 100%;
+      	line-height: 60px;*/
+      	width:calc(100% - 147px);
+        flex-wrap:nowrap;
+        justify-content:space-between
 	}
 
 	nav ul
@@ -331,11 +334,28 @@
 
 	nav ul li a
 	{
-		text-decoration: none;
+/*		text-decoration: none;
 		color: #fff;
-		font-size: 20px;
+		font-size: 20px;*/
+						display: block;
+				padding: 1em 1.5em;
+				letter-spacing: 1px;
+				text-decoration: none;
+				text-transform: uppercase;
+				font-weight: 200;
+				font-size: 1em;
+				outline: 0;
+				color: rgba(255,255,255,.7);
 	}
 
+	nav li.active a
+	{
+			background: none;
+			border-radius: 40px;
+			border: 5px solid;
+			border-color: rgba(255,255,255,.8);
+			color: #FFF;
+	}
 	
 /*********************************************************************************/
 /* Banner                                                                        */
