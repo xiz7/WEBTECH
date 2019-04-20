@@ -297,16 +297,45 @@
 	{
 	}
 	
-	#nav
-	{       
+	nav
+	{      
+    	position: fixed;
+      	width: 100%;
+      	line-height: 60px;
 	}
 
-		#nav ul
-		{
-            margin:0;
-            position:sticky;
-          top: 0;
-		}
+	nav ul
+	{
+      line-height: 60px;
+      list-style: none;
+      background: rgba(225, 225, 225, 0.1);
+      overflow: hidden;
+      color: #fff;
+      padding: 0;
+      text-align: left;
+      margin: 0;
+      padding-right: 40px;
+      transition: 1s;
+	}
+
+	nav.black ul
+	{
+		background: rgba(0,0,0,.2);
+	}
+
+	nav ul li
+	{
+      display: inline-block;
+      padding: 16px 40px;;
+	}
+
+	nav ul li a
+	{
+		text-decoration: none;
+		color: #fff;
+		font-size: 20px;
+	}
+
 	
 /*********************************************************************************/
 /* Banner                                                                        */
@@ -362,25 +391,3 @@
 		color: #FFF;
 	}
 	
-/*********************************************************************************/
-/* Copyright                                                                     */
-/*********************************************************************************/
-	
-	#copyright
-	{
-		position: relative;
-		padding: 3em 0em;
-		letter-spacing: 1px;
-		text-align: center;
-		color: rgba(255,255,255,.2);
-	}
-	
-	#copyright .container
-	{
-	}
-	
-	#copyright a
-	{
-		text-decoration: none;
-		color: rgba(255,255,255,.3);
-	}	
