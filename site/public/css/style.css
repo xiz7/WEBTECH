@@ -99,11 +99,6 @@
 			padding: 0 0 0.5em 0;
 		}
 		
-	footer
-	{
-		margin-top: 1em;
-	}
-
 	br.clear
 	{
 		clear: both;
@@ -291,12 +286,32 @@
 		position: relative;
 		background: #2a2f27 url(../images/background.jpg) no-repeat;
 		background-size: cover;
+		padding: 5em 0em;
+		text-align: center;
 	}
 
 	#logo
 	{
+        margin-bottom: 3em;
 	}
 	
+    #logo h1
+    {
+        color: #FFF;
+        font-family:monospace;
+    }
+
+    #logo h1 a
+    {
+        display: block;
+        letter-spacing: 15px;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 4em;
+        font-weight: 900;
+        color: #FFF;
+    }
+
 	nav
 	{      
     	position: fixed;
@@ -348,6 +363,7 @@
 				color: rgba(255,255,255,.7);
 	}
 
+<<<<<<< HEAD
 	nav li.active a
 	{
 			background: none;
@@ -356,6 +372,12 @@
 			border-color: rgba(255,255,255,.8);
 			color: #FFF;
 	}
+=======
+    nav ul li a:hover
+    {
+        color: #Fbb;
+    }
+>>>>>>> 3707e747849ffebe2ab29a63dfe1983170850a3f
 	
 /*********************************************************************************/
 /* Banner                                                                        */
@@ -376,6 +398,38 @@
 	{
 		position: relative;
 		background: #fff;
+        padding: 6em 0em 4em 0em;
+	}
+
+	#content header
+	{
+		margin-bottom: 2em;
+	}
+	
+	#content header h2
+	{
+		font-size: 3em;
+	}
+	
+	#content header .byline
+	{
+		font-size: 1.40em;
+	}
+	
+    .homepage #header
+    {
+        padding: 15em 0em;
+    }
+
+    #content
+    {
+        text-align: justify;
+    }
+	#sidebar h2
+	{
+		display: block;
+		padding-bottom: 2em;
+		font-size: 1.4em;
 	}
 
 /*********************************************************************************/
@@ -386,6 +440,7 @@
 	{
 		position: relative;
 		background: #f2f2f2;
+        padding: 6em 0em;
 	}
 	
 	#featured h2
@@ -403,11 +458,14 @@
 	{
 		position: relative;
 		background: #1d1d1d;
+        padding: 6em 0em;
 	}
 	
 	#footer h2
 	{
 		display: block;
 		color: #FFF;
+        padding-bottom: 2em;
+		font-size: 1.4em;
 	}
 	
