@@ -31,8 +31,9 @@
 				<header>
 					<nav>
 					                      
-						<div class="menu">
+						<div id = "navbar">
 							<ul>
+
 								<li class="active"><a href="index.html">Homepage</a></li>
 								<li><a href="left-sidebar.html">Left Sidebar</a></li>
 								<li><a href="right-sidebar.html">Right Sidebar</a></li>
@@ -65,6 +66,22 @@
 
       </script>
 
+      <!-- sticky -->
+      <script>
+		window.onscroll = function() {myFunction()};
+
+	var navbar = document.getElementById("navbar");
+	var sticky = navbar.offsetTop;
+
+	function myFunction() {
+	  if (window.pageYOffset >= sticky) {
+	    navbar.classList.add("sticky")
+	  } else {
+	    navbar.classList.remove("sticky");
+	  }
+	}
+	</script>
+
 		<!-- Main -->
 		<div id="main">
 			<div class="container">
@@ -74,8 +91,28 @@
 					<div id="content" class="8u skel-cell-important">
 						<section>
 							<header>
+										
+
+							<!-- here should be several svg nav	 -->								
+							<!-- SVG -->
+							<svg width="250" height="250">
+
+								<circle r="120" cx="125" cy="125" fill="#fbb" stroke="black" stroke-width="10px"/>
+								<circle r="70" cx="125" cy="125" fill="none" stroke="black" stroke-width="10px"/>
+								<rect rx="100" ry="100" x="25" y="25" height="200" width="200" fill="lightblue"/>
+
+								<polygon fill="pink" points="50,50 125,125 200,50 200,200 125,125"/>
+							</svg>
+
+
+
 								<h2>Welcome to TG Decoration!</h2>
+
+
 							</header>
+
+
+
 							<a href="#" class="image full"><img src="images/piano2.png" alt="" width=700 height=260 /></a>
 							<p>Hubei Yijin Decoration Engineering Co., Ltd. is a comprehensive company engaged in space planning and design, interior and exterior decoration design, budget and construction. The company's business scope includes: room decoration, electrical engineering, water supply and drainage and HVAC engineering, landscaping, steel structure fire protection, integrated home, building curtain wall, network monitoring and other architectural decoration and installation engineering business. The company has strong technical strength. The company has 32 employees, including 1 chief designer, 1 design director, 3 chief designers, 5 designers, 10 management personnel and 12 other staff members.</p>
 						</section>

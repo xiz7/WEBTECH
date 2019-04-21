@@ -226,9 +226,6 @@
 
 	nav
 	{      
-    	position: fixed;
-/*      	width: 100%;
-      	line-height: 60px;*/
       	width:calc(100% - 147px);
         flex-wrap:nowrap;
         justify-content:space-between
@@ -289,7 +286,11 @@
     {
         color: #Fbb;
     }
-
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
 
 /*********************************************************************************/
