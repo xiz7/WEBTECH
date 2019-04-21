@@ -1,0 +1,28 @@
+HTML:  A
+Created four pages HTML.
+Used a lightweight responsive framework called skel which provides JS access to CSS breakpoints, events, and other tools.
+
+CSS: A?
+Wrote a great deal of styles including tags we used and we might use in the future.
+ No style tags in HTML excluding inline SVG.
+
+JS: C?
+Create a sticky and colour changing nav bar followed by online tutorial.
+
+PNG: B
+Converted  some jpeg to png by GIMP.
+Use of basic tools.
+
+Not done:
+More sophisticated tools such as handling layers and transparency, or airbrushing or creating original artwork.
+
+
+SVG: A
+  	Created an image by Inkscape with shape tools and freehand drawing. 	  
+	Added some inline SVG in order to draw our web logo in the html file which involves Shapes, path, text, filters, linear gradient and some simple animation.
+		
+Server  X
+
+Database X
+
+Dynamic pages X
