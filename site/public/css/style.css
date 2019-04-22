@@ -226,6 +226,7 @@
 	nav
 	{      
 		position: sticky;
+		position: -webkit-sticky; /* Safari */
 		top: 0;
 		width: 100%;
         flex-wrap:nowrap;
@@ -237,7 +238,7 @@
 	{
       line-height: 60px;
       list-style: none;
-      background: rgba(225, 225, 225, 0.5);
+      background: rgba(225, 225, 225, 0.9);
       overflow: hidden;
       color: #fff;
       padding: 0;
@@ -274,8 +275,8 @@
 	nav li.active a
 	{
 			background: none;
-			border-radius: 40px;
-			border: 5px solid;
+			border-radius: 30px;
+			border: 2px solid;
 			border-color: rgba(255,255,255,.8);
 			color: #FFF;
 	}

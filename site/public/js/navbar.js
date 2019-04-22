@@ -1,3 +1,4 @@
+ "use strict";
  $(window).on("scroll", function() {
             if($(window).scrollTop()) {
                   $('nav').addClass('black');
@@ -7,5 +8,3 @@
                   $('nav').removeClass('black');
             }
       });
-
-    window.onscroll = function() {myFunction()};
