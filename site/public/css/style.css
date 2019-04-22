@@ -230,7 +230,7 @@
 		width: 100%;
         flex-wrap:nowrap;
 		justify-content:space-between;
-		z-index: 999;
+		z-index: 9999;
 	}
 
 	nav ul
@@ -241,7 +241,7 @@
       overflow: hidden;
       color: #fff;
       padding: 0;
-      text-align: left;
+      text-align: center;
       margin: 0;
       padding-right: 40px;
       transition: 1s;
@@ -249,29 +249,26 @@
 
 	nav.black ul
 	{
-		background: rgba(0,0,0,.2);
+		background: rgba(97, 95, 85, 0.9);
 	}
 
 	nav ul li
 	{
-      display: inline-block;
-      padding: 16px 40px;;
+		display: inline-block;
+		padding: 16px 40px;
 	}
 
 	nav ul li a
 	{
-/*		text-decoration: none;
-		color: #fff;
-		font-size: 20px;*/
-						display: block;
-				padding: 1em 1.5em;
-				letter-spacing: 1px;
-				text-decoration: none;
-				text-transform: uppercase;
-				font-weight: 200;
-				font-size: 1em;
-				outline: 0;
-				color: rgba(255,255,255,.7);
+		display: block;
+		padding: 1em 1.5em;
+		letter-spacing: 1px;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-weight: 200;
+		font-size: 1em;
+		outline: 0;
+		color: rgba(255,255,255,.7);
 	}
 
 	nav li.active a
@@ -328,7 +325,8 @@
     #content
     {
         text-align: justify;
-    }
+	}
+
 	#sidebar h2
 	{
 		display: block;
