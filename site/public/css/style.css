@@ -225,19 +225,19 @@
 
 	nav
 	{      
-    	position: fixed;
-/*      	width: 100%;
-      	line-height: 60px;*/
-      	width:calc(100% - 147px);
+		position: sticky;
+		top: 0;
+		width: 100%;
         flex-wrap:nowrap;
-        justify-content:space-between
+		justify-content:space-between;
+		z-index: 999;
 	}
 
 	nav ul
 	{
       line-height: 60px;
       list-style: none;
-      background: rgba(225, 225, 225, 0.1);
+      background: rgba(225, 225, 225, 0.5);
       overflow: hidden;
       color: #fff;
       padding: 0;
