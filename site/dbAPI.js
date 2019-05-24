@@ -42,72 +42,62 @@ drop: function(db){
         );
     });
 },
-query: function(db,param){
+query: function(db,username,callback){
     let stmt = db.prepare("SELECT password FROM user WHERE username = ?");
       db.serialize(function (){
-        stmt.all([param],(err,rows) => {
+        stmt.get([username],(err,row) => {
           if (err) {
             return console.error(err.message);
           }
-           if (rows[0] == undefined){
-             return false;
-           }else{
-
-             return true;
-           }
+          if(callback && typeof(callback) ==="function"){
+            callback(row);
           }
-        );
+        });
+        stmt.finalize();
     });
-    stmt.finalize();
 },
 
-login: function(db,username,password,callback){
-  let status;
-    //let stmt = db.prepare("SELECT password FROM user WHERE username = ? AND password = ? ");
-    let sql = "SELECT * FROM user WHERE username = ? AND password = ?";
-      db.serialize(function (){
-        db.each(sql,[username, password],(err,rows) => {
-          console.log("err:" + err);
-          console.log("row:" + rows);
-          console.log("pswd:" + password);
-          if(err){console.log("not printed");}
-          console.log(rows);
-          console.log(rows.username);
-          console.log(rows.password);
-          console.log(rows[0] === undefined);
-                if(err || rows === undefined){
-                  // res.send('Wrong');
-                   console.log('Wrong');
-                  status = false;
-                }else{
-                  // res.send('Success');
-                   console.log('Succesfully log in');
-                  status = true;
-                }
-              }, function(){
-                callback(status);
-              }
+// login: function(db,username,password,callback){
+//     let status;
+//     let stmt = db.prepare("SELECT password FROM user WHERE username = ? AND password = ? ");
+//       db.serialize(function (){
+//         stmt.each([username, password],(err,row) => {
+//           if(err){console.log("not printed");}
+//           console.log(row);
+//           console.log(row.username);
+//           console.log(row.password);
+//                 if(err || row === undefined){
+//                   // res.send('Wrong');
+//                    console.log('Wrong');
+//                   status = false;
+//                 }else{
+//                   // res.send('Success');
+//                    console.log('Succesfully log in');
+//                   status = true;
+//                 }
+//               }
           
-        );
-      });
+//         ,(status)=>{callback(status);});
+//         console.log("status:" + status);
+        
+//       });
 
     
-      //stmt.finalize();
+//       //stmt.finalize();
    
-},
+// },
 
-insert: function(db,username,password,res){
+insert: function(db,username,password){
     let stmt= db.prepare("INSERT INTO user (username, password) VALUES (?,?)");
     db.serialize(function (){
       stmt.run([username,password],(err) => {
         if (err) {
-          res.send('User already exits');
           return console.error(err.message);
         }
-        res.send('Success');
         console.log('Succesfully Inserted.');}
         );
     });
     stmt.finalize();
 }
 };
+

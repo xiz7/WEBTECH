@@ -36,17 +36,22 @@ app.post('/login', urlencodedParser, function(req, res){
         password:req.body.password
     };
     console.log(response);
-    dbAPI.login(db,response.username,response.password,function(status){
-            if(status == true){
-                console.log("successfully login");
-                res.end("<h2>successfully login</h2>");
+    dbAPI.query(db,response.username,function(row){
+            if(row == undefined){
+                console.log("Wrong username!");
+                res.end("<h2>wrong name or password!</h2>");
             }
             else{
-                res.end("<h2>wrong name or password!</h2>");
+                if(row.password == response.password){
+                    console.log("successfully login");
+                    res.end("<h2>successfully login</h2>");
+                }else{
+                    console.log("Wrong password!");
+                    res.end("<h2>wrong name or password!</h2>");
+                }  
             }
         });
     });
-
 
 
 
@@ -58,7 +63,17 @@ app.post('/signup', urlencodedParser, function(req, res){
         password:req.body.password
     };
     console.log(response);
-    dbAPI.insert(db,response.username, response.password,res);
+    dbAPI.query(db,response.username, function(row){
+        if(row == undefined){
+            dbAPI.insert(db,response.username,response.password);
+            console.log("successfully signed!");
+            res.end("<h2>successfully signed!</h2>");
+
+        }else{
+                console.log("Existed username!");
+                res.end("<h2>Existed username!</h2>");
+        }
+    });
 
     
 });
