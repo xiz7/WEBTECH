@@ -64,18 +64,24 @@ query: function(db,param){
 login: function(db,username,password,callback){
   let status;
     //let stmt = db.prepare("SELECT password FROM user WHERE username = ? AND password = ? ");
-    let sql = "SELECT password FROM user WHERE username = " + username + " AND password = " + password;
+    let sql = "SELECT * FROM user WHERE username = ? AND password = ?";
       db.serialize(function (){
-        db.each(sql,(err,rows) => {
-          console.log(err);
+        db.each(sql,[username, password],(err,rows) => {
+          console.log("err:" + err);
+          console.log("row:" + rows);
+          console.log("pswd:" + password);
+          if(err){console.log("not printed");}
           console.log(rows);
-                if(err || rows[0]=== undefined){
+          console.log(rows.username);
+          console.log(rows.password);
+          console.log(rows[0] === undefined);
+                if(err || rows === undefined){
                   // res.send('Wrong');
-                  // console.log('Wrong');
+                   console.log('Wrong');
                   status = false;
                 }else{
                   // res.send('Success');
-                  // console.log('Succesfully Inserted.');
+                   console.log('Succesfully log in');
                   status = true;
                 }
               }, function(){
