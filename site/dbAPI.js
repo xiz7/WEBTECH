@@ -78,7 +78,9 @@ login: function(db,username,password,callback){
                   // console.log('Succesfully Inserted.');
                   status = true;
                 }
-              }, callback(status)
+              }, function(){
+                callback(status);
+              }
           
         );
       });
