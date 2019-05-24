@@ -1,46 +1,105 @@
-"use strict";
-const sqlite = require('sqlite3').verbose();
 
-// open databasw in memory
-let db = new sqlite.Database("./data.db", sqlite.OPEN_READWRITE,(err) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log('Connected to the database.');
-});
+var sqlite = require('sqlite3').verbose();
 
+module.exports = {
 
-db.serialize(select("dogag"));
-  
 
 // close database
-db.close((err) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log('Close the database connection.');
-});
-function drop(){
-    db.run("Drop table users");
+close: function(db){
+  db.close((err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
+},
+
+create: function(db){
+  let stmt = "CREATE TABLE IF NOT EXISTS " +
+    "user(" +
+    "userID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+    "username VARCHAR(50) UNIQUE NOT NULL, " +
+    "password VARCHAR(50) NOT NULL " +
+    ");";
+  db.serialize(function (){
+    db.run(stmt,(err) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log('Table Created.');}
+      );
+  });
+},
+
+drop: function(db){
+    let stmt = "DROP TABLE IF EXISTS user;";
+    db.serialize(function (){
+      db.run(stmt,(err) => {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log('Table Droped.');}
+        );
+    });
+},
+query: function(db,param){
+    let stmt = db.prepare("SELECT password FROM user WHERE username = ?");
+      db.serialize(function (){
+        stmt.all([param],(err,rows) => {
+          if (err) {
+            return console.error(err.message);
+          }
+           if (rows[0] == undefined){
+             return false;
+           }else{
+
+             return true;
+           }
+          }
+        );
+    });
+    stmt.finalize();
+},
+
+login: function(db,username,password,callback){
+  let status;
+    //let stmt = db.prepare("SELECT password FROM user WHERE username = ? AND password = ? ");
+    let sql = "SELECT password FROM user WHERE username = " + username + " AND password = " + password;
+      db.serialize(function (){
+        db.each(sql,(err,rows) => {
+          console.log(err);
+          console.log(rows);
+                if(err || rows[0]=== undefined){
+                  // res.send('Wrong');
+                  // console.log('Wrong');
+                  status = false;
+                }else{
+                  // res.send('Success');
+                  // console.log('Succesfully Inserted.');
+                  status = true;
+                }
+              }, callback(status)
+          
+        );
+      });
+
+    
+      //stmt.finalize();
+   
+},
+
+insert: function(db,username,password,res){
+    let stmt= db.prepare("INSERT INTO user (username, password) VALUES (?,?)");
+    db.serialize(function (){
+      stmt.run([username,password],(err) => {
+        if (err) {
+          res.send('User already exits');
+          return console.error(err.message);
+        }
+        res.send('Success');
+        console.log('Succesfully Inserted.');}
+        );
+    });
+    stmt.finalize();
 }
-
-function create() {
-    db.run("create table users (userID, password)");
-}
-
-function select(param){
-    let stmt = "SELECT password FROM users WHERE userID = ?"
-     db.all(stmt,[param],show);
-
-}
-
-function insert(){
-
-
-    db.run("insert into users values ('dogag','dog')");
-}
-//Callback
-function show(err, rows) {
-    if (err) throw err;
-    console.log(rows);
-}
+};
