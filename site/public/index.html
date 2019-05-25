@@ -11,11 +11,12 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
+		<script type="text/javascript" src ="js/login.js"></script>>
 		<script type="text/javascript" src="js/navbar.js"></script>
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/banner.css" />
-
 	</head>
+
 	<body class="homepage">
 
 		<!-- Header -->
@@ -35,11 +36,17 @@
 			<ul>
 				<li class="active"><a href="index.html">Homepage</a></li>
 				<li><a href="styles.html">Styles</a></li>
-				<li><a href="designers.html">Designers</a></li>
-				<input type="text" placeholder="Search.." />
+				<li><div id ="space"><a href="designers.html">My Space</a></div></li>
+        		<li><div id = "login"><a href="http://127.0.0.1:3000/login.html">Login/Sign</a></div></li>
+        		<li><div id = "uname">user</div></li>
+        		<li><button type="button" id="exit" class="btn btn-danger" onclick="exitu()">Exit</button> <li>
+      			
 			</ul>
 		</div>
 	</nav>
+			<script >
+				load_data();
+		</script>
 	<script type="text/javascript" src="js/navbar.js"></script>
 	
 		<!-- Main -->

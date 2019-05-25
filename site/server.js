@@ -4,6 +4,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var fs = require("fs");
+// var multipart = require('connect-multiparty');
+// var multipartMiddleware = multipart();
+var multer  = require('multer');
+var upload = multer();
+
 var dbAPI = require("./dbAPI.js");
 
 // create application/x-www-form-urlencoded parder
@@ -19,8 +24,19 @@ var db = new sqlite.Database("./data.db", sqlite.OPEN_READWRITE,(err) => {
     console.log('Connected to the database.');
   });
 
+
+
 app.use(express.static('public'));
 app.use(urlencodedParser);
+app.use(bodyParser.json());
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By", ' 3.2.1');
+  // res.header("Content-Type", "application/json;charset=utf-8");
+  next();
+});
 
 app.get('/login.html', function(req, res){
     res.sendFile(__dirname + "/" + "login.html");
@@ -29,25 +45,27 @@ app.get('/signup.html', function(req, res){
     res.sendFile(__dirname + "/" + "signup.html");
 });
 
-app.post('/login', urlencodedParser, function(req, res){
+app.post('/login', upload.array(), function(req, res){
     // Prepare output in JSON format
+    let formData = Object.values(req.body);
+    console.log('form data:', formData[0]);
     let response = {
-        username:req.body.username,
-        password:req.body.password
+        username:formData[0][0],
+        password:formData[0][1]
     };
     console.log(response);
     dbAPI.query(db,response.username,function(row){
             if(row == undefined){
                 console.log("Wrong username!");
-                res.end("<h2>wrong name or password!</h2>");
+                res.send(false);
             }
             else{
                 if(row.password == response.password){
                     console.log("successfully login");
-                    res.end("<h2>successfully login</h2>");
+                    res.send(true);
                 }else{
                     console.log("Wrong password!");
-                    res.end("<h2>wrong name or password!</h2>");
+                    res.send(false);
                 }  
             }
         });
@@ -57,21 +75,24 @@ app.post('/login', urlencodedParser, function(req, res){
 
 
 
-app.post('/signup', urlencodedParser, function(req, res){
+app.post('/signup', upload.array(), function(req, res){
+
+    let formData = Object.values(req.body);
+    console.log('form data:', formData[0]);
     let response = {
-        username:req.body.username,
-        password:req.body.password
+        username:formData[0][0],
+        password:formData[0][1]
     };
-    console.log(response);
+
     dbAPI.query(db,response.username, function(row){
         if(row == undefined){
             dbAPI.insert(db,response.username,response.password);
             console.log("successfully signed!");
-            res.end("<h2>successfully signed!</h2>");
+            res.send(true);
 
         }else{
                 console.log("Existed username!");
-                res.end("<h2>Existed username!</h2>");
+                res.send('exist');
         }
     });
 

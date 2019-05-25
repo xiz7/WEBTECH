@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="#" />
+    <link type="text/css" rel="styleSheet"  href="css/main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <title>Login</title>
+</head>
+
+
+<body>
+    <div id="bg">
+        <div id="hint"><!-- alert -->
+            <p>Login failure!</p>
+        </div>
+        <div id="login_wrap">
+            <div id="login"><!-- animation -->
+                <div id="status">
+                    <i style="top: 0">Log</i>
+                    <i style="top: 35px">Sign</i>
+                    <i style="right: 5px">in</i>
+                </div>
+                <span>
+                    <form action = "http://127.0.0.1:3000/signup" method = "POST" >
+                        <p class="form"><input type="text" id="username" placeholder="username"></p>
+                        <p class="form"><input type="password" id="password" placeholder="password"></p>
+                        <p class="form confirm"><input type="password" id="confirm-password" placeholder="confirm password"></p>
+                        <input type="buttom" value="Login" class="btn" onclick =login() id ="log" style="margin-right: 60px;" >
+                        <input type="button" value="Register" class="btn" onclick = signin() id = "sign">
+                    </form>
+                </span>
+            </div>
+
+            <div id="login_img">
+                <span >
+                              <!-- SVG -->
+              <div id="mysvg">
+                <svg width="500" height="500">
+                    <defs>
+                    <!-- filters -->
+                      <filter id="f1" x="0" y="0">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="15" />
+                      </filter>
+
+                    <!-- gradient -->
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:LightYellow;ed;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:Gold;stop-opacity:1" />
+                    </linearGradient>
+
+                    <pattern id = "logo1" x="125" y="125" width = "250" height ="250" patternUnits="userSpaceOnUse">
+
+                      <circle r="120" cx="125" cy="125" fill="#fbb" stroke="black" stroke-width="10px" />
+                      <circle r="70" cx="125" cy="125" fill="none" stroke="black" stroke-width="10px" />
+                      <rect rx="100" ry="100" x="25" y="25" height="200" width="200" fill="url(#grad)" />
+
+                      <path d="M200 30 L0 125 L200 230 Z" filter="url(#f1)" />
+                      <path d="M200 30 L10 125 L200 230 Z"  fill="#fbb"/>
+                      <path d="M200 30 L20 125 L200 230 Z"  filter="url(#f1)"/>
+                      <path d="M200 30 L30 125 L200 230 Z"  fill="#fbb"/>
+                      <path d="M200 30 L40 125 L200 230 Z"  filter="url(#f1)"/>
+                      <path d="M200 30 L50 125 L200 230 Z"  fill="#fbb"/>
+                      <path d="M200 30 L60 125 L200 230 Z"  filter="url(#f1)"/>
+                      <path d="M200 30 L70 125 L200 230 Z"  fill="#fbb"/>
+                      <path d="M200 30 L80 125 L200 230 Z"  filter="url(#f1)"/>
+                      <path d="M200 30 L90 125 L200 230 Z"  fill="#fbb"/>
+                      <path d="M200 30 L100 125 L200 230 Z"  />
+                      <path d="M200 30 L110 125 L200 230 Z"  fill="#fbb"/>
+                        <path d="M200 30 L120 125 L200 230 Z"  />
+
+                      <polygon fill="pink" points="50,50 125,125 200,50 200,200 125,125"/>
+                      <g transform="rotate(-45 20,40)">
+                        <text x="0" y="45" fill="#ffffff">TG .CO
+                          <animateMotion path="M 0 45 L 100 145 L 0 45" dur="5s" fill="freeze" />
+                        </text>
+                      </g>
+                    </pattern>
+                        
+                    </defs>
+                  
+                  <rect x="0" y="0" width="100%" height="100%" fill="url(#logo1)"></rect>
+                </svg>
+              </div>
+
+                </span>
+                <p id="title">Thousands Gold Decoration</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var onoff = true//login or sign
+    var confirm = document.getElementsByClassName("confirm")[0]
+    var username = document.getElementById("username")
+    var password = document.getElementById("password")
+    var con_pass = document.getElementById("confirm-password")
+    
+    //centrlize title
+    var name_c = document.getElementById("title")
+    name = name_c.innerHTML.split("")
+    name_c.innerHTML = ""
+    for (i = 0; i < name.length; i++)
+        if (name[i] != ",")
+            name_c.innerHTML += "<i>" + name[i] + "</i>"
+    //hint() on top
+    function hint() {
+        let hit = document.getElementById("hint")
+        hit.style.display = "block"
+        hit.style.opacity = 1
+        // setTimeout("hit.style.opacity = 1", 0)
+        // setTimeout("hit.style.opacity = 0", 2000)
+        // setTimeout('hit.style.display = "none"', 3000)
+    }
+    //Call back
+    function submit(url,callback) {
+        let request = new XMLHttpRequest()
+        request.open("post", url, true)
+        //request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        let data = new FormData()
+
+        data.append(username, username.value)
+        data.append(password, password.value)
+        request.onreadystatechange = function() {
+            if (this.readyState == 4) {
+                callback.call(this, this.response)
+                console.log(this.responseText)
+            }
+        }
+        console.log(data.get(username))
+        request.send(data)
+    }
+
+
+
+    // AJAX 
+  //   $("sign").click(function(){
+  //     $.post("demo_test.asp", function(data, status){
+  //       alert("Data: " + data + "\nStatus: " + status);
+  //     });
+  // });
+
+  var mytime;
+    //Sign in
+    function signin() {
+        let status = document.getElementById("status").getElementsByTagName("i")
+        let hit = document.getElementById("hint").getElementsByTagName("p")[0]
+        if (onoff) {
+            confirm.style.height = 51 + "px"
+            status[0].style.top = 35 + "px"
+            status[1].style.top = 0
+            onoff = !onoff
+        } else {
+            if (!/^[A-Za-z0-9]+$/.test(username.value))
+                hit.innerHTML = "username can only conatin numbers and alphabets"
+            else if (username.value.length < 6)
+                hit.innerHTML = "username must not be shorter than 6"
+            else if (password.value.length < 6)
+                hit.innerHTML = "password must not be shorter than 6"
+            else if (password.value != con_pass.value)
+                hit.innerHTML = "Two passwords not equal"
+            else if (password.value = con_pass.value) {
+                let url = "http://127.0.0.1:3000/signup"
+                submit(url,function(res) {
+                    if (res == "exist")
+                        hit.innerHTML = "Username exists, registration failed!"
+                    else if (res == "true") {
+                        hit.innerHTML = "Registration successed! Back in <span id='myspan'>5</span> seconds..."
+                        setTimeout("backIndex()", 5000)
+                        var mytime = setInterval("changeSec()",1000);
+                        localStorage.setItem("user",username.value); 
+                    } else if (res == "false")
+                        hit.innerHTML = "Registration failed!"
+                })
+            }
+
+            hint()
+        }
+    }
+
+
+    //login
+    function login() {
+
+        if (onoff) {     
+               let hit = document.getElementById("hint").getElementsByTagName("p")[0]
+                let url = "http://127.0.0.1:3000/login"
+                submit(url,function(res) {
+                  if (res == "true") {
+                        hit.innerHTML = "Login successed! Back in <span id='myspan'>5</span> seconds..."
+                        setTimeout("backIndex()", 5000)
+                        var mytime = setInterval("changeSec()",1000);
+                        localStorage.setItem("user",username.value); 
+                    } else if (res == "false")
+                        hit.innerHTML = "Login failed!"
+                })
+                hint()
+            
+        } else {
+            let status = document.getElementById("status").getElementsByTagName("i")
+            confirm.style.height = 0
+            status[0].style.top = 0
+            status[1].style.top = 35 + "px"
+            onoff = !onoff
+        }
+    }
+    function backIndex() {
+          clearInterval(mytime);
+          window.open("index.html","_self");
+        }
+    function changeSec() {
+           $('myspan').innerText=$('myspan').innerText-1;
+        }
+    function $(id) {
+        return document.getElementById(id);
+      }
+
+</script>
+</html>
