@@ -65,19 +65,19 @@
 							</header>
 							<ul class="style">
 								<li>
-									<p class="posted">August 11, 2002  |  (10 )  Comments</p>
-									<img src="images/america.jpg" alt="" />
-									<p class="text">American</p>
+									<img src="" id="img1" alt="" />
+									<p class="posted" id="p1"></p>
+									<p class="text" id="t1">American</p>
 								</li>
 								<li>
-									<p class="posted">August 11, 2002  |  (20 )  Comments</p>
-									<img src="images/european.jpg" alt="" />
-									<p class="text">European</p>
+									<img src="" id="img2" alt="" />
+									<p class="posted" id="p2"></p>
+									<p class="text" id="t2">European</p>
 								</li>
 								<li>
-									<p class="posted">August 11, 2002  |  (30 )  Comments</p>
-									<img src="images/farmhouse.png" alt="" />
-									<p class="text">Farmhouse</p>
+									<img src="" id="img3" alt="" />
+									<p class="posted" id="p3"></p>
+									<p class="text"  id="t3">Farmhouse</p>
 								</li>
 							</ul>
 						</section>
@@ -116,4 +116,44 @@
 
 		
 	</body>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+   <script>
+      function changeDom(){
+        //ajax call
+         $.ajax({
+                  url: 'http://localhost:3000/change',
+                  method:'POST',
+                  data: {list: "some info"}
+                }).done(function(data){
+                    //if we have a successful post request ... 
+                    if(data.success){
+                        //change the DOM &
+                        //set the data in local storage to persist upon page request
+                        //localStorage.setItem("permanentData", data.message);
+                        //var savedText = localStorage.getItem("permanentData");
+                        console.log(data.imageurl1);
+                        $('p.posted#p1').html(data.message1);
+                        $('p.posted#p2').html(data.message2);
+                        $('p.posted#p3').html(data.message3);
+                        $('img#img1').attr("src", data.imageurl1);
+                        $('img#img2').attr("src", data.imageurl2);
+                        $('img#img3').attr("src", data.imageurl3);
+                        $('p.text#t1').html(data.title1);
+                        $('p.text#t2').html(data.title2);
+                        $('p.text#t3').html(data.title3);
+                        return;
+                    }
+                }).fail(function(){
+                   //do nothing ....
+                    console.log('failed...');
+                    return;
+                });
+        };
+        $
+      //trigger change DOM  function
+      // $('.trigger').click(function(){
+      //    changeDom();
+      // });
+      window.onload(changeDom());
+   </script>
 </html>

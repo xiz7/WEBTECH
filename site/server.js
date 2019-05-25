@@ -10,6 +10,7 @@ var multer  = require('multer');
 var upload = multer();
 
 var dbAPI = require("./dbAPI.js");
+var db2API = require("./db2API.js");
 
 // create application/x-www-form-urlencoded parder
 var urlencodedParser = bodyParser.urlencoded({extended:false});
@@ -71,7 +72,22 @@ app.post('/login', upload.array(), function(req, res){
         });
     });
 
-
+app.post('/change', function(req, res) {
+    db2API.selectAll(db2API.concatData, function(data){
+        let address = "http://localhost:" + server.address().port;
+        console.log(data[0].imageurl);
+        res.send({success: true, 
+                message1:data[0].info,
+                message2:data[1].info,
+                message3:data[2].info,
+                imageurl1:address + data[0].imageurl,
+                imageurl2:address + data[1].imageurl,
+                imageurl3:address + data[2].imageurl,
+                title1:data[0].title,
+                title2:data[1].title,
+                title3:data[2].title});
+    });
+});
 
 
 
