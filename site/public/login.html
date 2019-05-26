@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang='en-GB' xml:lang="en-GB">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="#" />
-    <link type="text/css" rel="styleSheet"  href="css/main.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="icon" type="image/x-icon" href="#" /> -->
+    <link type="text/css" rel="styleSheet"  href="css/login.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript" src= "js/login.js"></script>
     <title>Login</title>
 </head>
 
@@ -19,16 +18,16 @@
         <div id="login_wrap">
             <div id="login"><!-- animation -->
                 <div id="status">
-                    <i style="top: 0">Log</i>
-                    <i style="top: 35px">Sign</i>
-                    <i style="right: 5px">in</i>
+                    <i id="s1">Log</i>
+                    <i id="s2">Sign</i>
+                    <i id="s3">in</i>
                 </div>
                 <span>
                     <form action = "http://127.0.0.1:3000/signup" method = "POST" >
                         <p class="form"><input type="text" id="username" placeholder="username"></p>
                         <p class="form"><input type="password" id="password" placeholder="password"></p>
                         <p class="form confirm"><input type="password" id="confirm-password" placeholder="confirm password"></p>
-                        <input type="buttom" value="Login" class="btn" onclick =login() id ="log" style="margin-right: 60px;" >
+                        <input type="button" value="Login" class="btn" onclick =login() id ="log" style="margin-right: 60px;" >
                         <input type="button" value="Register" class="btn" onclick = signin() id = "sign">
                     </form>
                 </span>
@@ -36,7 +35,7 @@
 
             <div id="login_img">
                 <span >
-                              <!-- SVG -->
+              <!-- SVG -->
               <div id="mysvg">
                 <svg width="500" height="500">
                     <defs>
@@ -97,7 +96,7 @@
     var username = document.getElementById("username")
     var password = document.getElementById("password")
     var con_pass = document.getElementById("confirm-password")
-    
+    var mytime
     //centrlize title
     var name_c = document.getElementById("title")
     name = name_c.innerHTML.split("")
@@ -105,117 +104,6 @@
     for (i = 0; i < name.length; i++)
         if (name[i] != ",")
             name_c.innerHTML += "<i>" + name[i] + "</i>"
-    //hint() on top
-    function hint() {
-        let hit = document.getElementById("hint")
-        hit.style.display = "block"
-        hit.style.opacity = 1
-        // setTimeout("hit.style.opacity = 1", 0)
-        // setTimeout("hit.style.opacity = 0", 2000)
-        // setTimeout('hit.style.display = "none"', 3000)
-    }
-    //Call back
-    function submit(url,callback) {
-        let request = new XMLHttpRequest()
-        request.open("post", url, true)
-        //request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-        let data = new FormData()
-
-        data.append(username, username.value)
-        data.append(password, password.value)
-        request.onreadystatechange = function() {
-            if (this.readyState == 4) {
-                callback.call(this, this.response)
-                console.log(this.responseText)
-            }
-        }
-        console.log(data.get(username))
-        request.send(data)
-    }
-
-
-
-    // AJAX 
-  //   $("sign").click(function(){
-  //     $.post("demo_test.asp", function(data, status){
-  //       alert("Data: " + data + "\nStatus: " + status);
-  //     });
-  // });
-
-  var mytime;
-    //Sign in
-    function signin() {
-        let status = document.getElementById("status").getElementsByTagName("i")
-        let hit = document.getElementById("hint").getElementsByTagName("p")[0]
-        if (onoff) {
-            confirm.style.height = 51 + "px"
-            status[0].style.top = 35 + "px"
-            status[1].style.top = 0
-            onoff = !onoff
-        } else {
-            if (!/^[A-Za-z0-9]+$/.test(username.value))
-                hit.innerHTML = "username can only conatin numbers and alphabets"
-            else if (username.value.length < 6)
-                hit.innerHTML = "username must not be shorter than 6"
-            else if (password.value.length < 6)
-                hit.innerHTML = "password must not be shorter than 6"
-            else if (password.value != con_pass.value)
-                hit.innerHTML = "Two passwords not equal"
-            else if (password.value = con_pass.value) {
-                let url = "http://127.0.0.1:3000/signup"
-                submit(url,function(res) {
-                    if (res == "exist")
-                        hit.innerHTML = "Username exists, registration failed!"
-                    else if (res == "true") {
-                        hit.innerHTML = "Registration successed! Back in <span id='myspan'>5</span> seconds..."
-                        setTimeout("backIndex()", 5000)
-                        var mytime = setInterval("changeSec()",1000);
-                        localStorage.setItem("user",username.value); 
-                    } else if (res == "false")
-                        hit.innerHTML = "Registration failed!"
-                })
-            }
-
-            hint()
-        }
-    }
-
-
-    //login
-    function login() {
-
-        if (onoff) {     
-               let hit = document.getElementById("hint").getElementsByTagName("p")[0]
-                let url = "http://127.0.0.1:3000/login"
-                submit(url,function(res) {
-                  if (res == "true") {
-                        hit.innerHTML = "Login successed! Back in <span id='myspan'>5</span> seconds..."
-                        setTimeout("backIndex()", 5000)
-                        var mytime = setInterval("changeSec()",1000);
-                        localStorage.setItem("user",username.value); 
-                    } else if (res == "false")
-                        hit.innerHTML = "Login failed!"
-                })
-                hint()
-            
-        } else {
-            let status = document.getElementById("status").getElementsByTagName("i")
-            confirm.style.height = 0
-            status[0].style.top = 0
-            status[1].style.top = 35 + "px"
-            onoff = !onoff
-        }
-    }
-    function backIndex() {
-          clearInterval(mytime);
-          window.open("index.html","_self");
-        }
-    function changeSec() {
-           $('myspan').innerText=$('myspan').innerText-1;
-        }
-    function $(id) {
-        return document.getElementById(id);
-      }
-
 </script>
+
 </html>

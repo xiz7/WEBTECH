@@ -16,7 +16,7 @@ close: function(db){
 
 create: function(db){
   let stmt = "CREATE TABLE IF NOT EXISTS " +
-    "user(" +
+    "user(" + 
     "userID INTEGER PRIMARY KEY AUTOINCREMENT, " +
     "username VARCHAR(50) UNIQUE NOT NULL, " +
     "password VARCHAR(50) NOT NULL " +
@@ -57,35 +57,6 @@ query: function(db,username,callback){
     });
 },
 
-// login: function(db,username,password,callback){
-//     let status;
-//     let stmt = db.prepare("SELECT password FROM user WHERE username = ? AND password = ? ");
-//       db.serialize(function (){
-//         stmt.each([username, password],(err,row) => {
-//           if(err){console.log("not printed");}
-//           console.log(row);
-//           console.log(row.username);
-//           console.log(row.password);
-//                 if(err || row === undefined){
-//                   // res.send('Wrong');
-//                    console.log('Wrong');
-//                   status = false;
-//                 }else{
-//                   // res.send('Success');
-//                    console.log('Succesfully log in');
-//                   status = true;
-//                 }
-//               }
-          
-//         ,(status)=>{callback(status);});
-//         console.log("status:" + status);
-        
-//       });
-
-    
-//       //stmt.finalize();
-   
-// },
 
 insert: function(db,username,password){
     let stmt= db.prepare("INSERT INTO user (username, password) VALUES (?,?)");

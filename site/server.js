@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var fs = require("fs");
+var bcrypt = require('bcrypt');
 // var multipart = require('connect-multiparty');
 // var multipartMiddleware = multipart();
 var multer  = require('multer');
@@ -61,16 +62,50 @@ app.post('/login', upload.array(), function(req, res){
                 res.send(false);
             }
             else{
-                if(row.password == response.password){
+                bcrypt.compare(response.password, row.password, function(err, result) {
+                if(result) {
                     console.log("successfully login");
                     res.send(true);
-                }else{
+                } else {
                     console.log("Wrong password!");
                     res.send(false);
-                }  
+                 } 
+                });
             }
         });
     });
+
+app.post('/signup', upload.array(), function(req, res){
+
+    let formData = Object.values(req.body);
+    console.log('form data:', formData[0]);
+    let response = {
+        username:formData[0][0],
+        password:formData[0][1]
+    };
+
+    dbAPI.query(db,response.username, function(row){
+        if(row == undefined){
+            bcrypt.hash(response.password, 10, function(err, hash) {
+                if(err){
+                    console.log(err);
+                }
+                console.log("hash:"+hash);
+                dbAPI.insert(db,response.username,hash);
+                // Store hash in database
+            });
+            
+            console.log("successfully signed!");
+            res.send(true);
+
+        }else{
+                console.log("Existed username!");
+                res.send('exist');
+        }
+    });
+
+    
+});
 
 app.post('/change', function(req, res) {
     db2API.selectAll(db2API.concatData, function(data){
@@ -89,31 +124,19 @@ app.post('/change', function(req, res) {
     });
 });
 
-
-
-app.post('/signup', upload.array(), function(req, res){
-
-    let formData = Object.values(req.body);
-    console.log('form data:', formData[0]);
-    let response = {
-        username:formData[0][0],
-        password:formData[0][1]
-    };
-
-    dbAPI.query(db,response.username, function(row){
-        if(row == undefined){
-            dbAPI.insert(db,response.username,response.password);
-            console.log("successfully signed!");
-            res.send(true);
-
-        }else{
-                console.log("Existed username!");
-                res.send('exist');
-        }
+app.post('/updateIndex', function(req, res) {
+    db2API.selectAll(db2API.concatData, function(data){
+        let address = "http://localhost:" + server.address().port;
+        console.log(data[0].imageurl);
+        res.send({success: true, 
+                title1:data[0].title,
+                title2:data[1].title,
+                title3:data[2].title,
+                title4:data[3].title,
+                title5:data[4].title});
     });
-
-    
 });
+
 
 app.post('/file_upload', function(req, res){
     console.log(req.files.file.name);
