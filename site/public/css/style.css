@@ -1,7 +1,3 @@
-/*********************************************************************************/
-/* Basic                                                                         */
-/*********************************************************************************/
-
 	body
 	{
 		background: #141414;
@@ -24,9 +20,7 @@
 	{
 		color: inherit;
 	}
-		
 
-	/* Don't forget to set this to something that matches the design */
 	a
 	{
 		text-decoration: underline;
@@ -242,7 +236,7 @@
       overflow: hidden;
       color: #fff;
       padding: 0;
-      text-align: center;
+      text-align: left;
       margin: 0;
       padding-right: 40px;
       transition: 1s;

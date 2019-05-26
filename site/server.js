@@ -44,12 +44,15 @@ app.use(bodyParser.json());
 
 
 function requireLogin(req, res, next) {
-  if (req.session.loggedIn) {
+    // require the user to log in
+    var theme=localStorage.getItem("user");
+    if (theme==null||theme=="") {
+    res.redirect("/login.html"); // render a form
+    } else {
+
     console.log("pass");
     next(); // allow the next route to run
-  } else {
-    // require the user to log in
-    res.redirect("/login.html"); // or render a form, etc.
+
   }
 }
 
