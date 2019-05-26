@@ -1,11 +1,20 @@
 
 var sqlite = require('sqlite3').verbose();
+var db;
+
 
 module.exports = {
-
+// Connect database
+connect: function(){
+  db = new sqlite.Database("./data.db", sqlite.OPEN_READWRITE, (err) => {
+    if(err){
+      console.error(err.message);
+    }
+  });
+},
 
 // close database
-close: function(db){
+close: function(){
   db.close((err) => {
     if (err) {
       return console.error(err.message);
@@ -14,7 +23,7 @@ close: function(db){
   });
 },
 
-create: function(db){
+create: function(){
   let stmt = "CREATE TABLE IF NOT EXISTS " +
     "user(" + 
     "userID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -31,7 +40,7 @@ create: function(db){
   });
 },
 
-drop: function(db){
+drop: function(){
     let stmt = "DROP TABLE IF EXISTS user;";
     db.serialize(function (){
       db.run(stmt,(err) => {
@@ -42,7 +51,7 @@ drop: function(db){
         );
     });
 },
-query: function(db,username,callback){
+query: function(username,callback){
     let stmt = db.prepare("SELECT password FROM user WHERE username = ?");
       db.serialize(function (){
         stmt.get([username],(err,row) => {
@@ -57,8 +66,7 @@ query: function(db,username,callback){
     });
 },
 
-
-insert: function(db,username,password){
+insert: function(username,password){
     let stmt= db.prepare("INSERT INTO user (username, password) VALUES (?,?)");
     db.serialize(function (){
       stmt.run([username,password],(err) => {
@@ -71,4 +79,3 @@ insert: function(db,username,password){
     stmt.finalize();
 }
 };
-

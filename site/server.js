@@ -16,16 +16,17 @@ var db2API = require("./db2API.js");
 // create application/x-www-form-urlencoded parder
 var urlencodedParser = bodyParser.urlencoded({extended:false});
 
-// SQLITE3
-const sqlite = require('sqlite3').verbose();
-//open database
-var db = new sqlite.Database("./data.db", sqlite.OPEN_READWRITE,(err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Connected to the database.');
-  });
+// // SQLITE3
+// const sqlite = require('sqlite3').verbose();
+// //open database
+// // var db = new sqlite.Database("./data.db", sqlite.OPEN_READWRITE,(err) => {
+// //     if (err) {
+// //       return console.error(err.message);
+// //     }
+// //     console.log('Connected to the database.');
+// //   });
 
+dbAPI.connect();
 
 
 app.use(express.static('public'));
@@ -56,7 +57,7 @@ app.post('/login', upload.array(), function(req, res){
         password:formData[0][1]
     };
     console.log(response);
-    dbAPI.query(db,response.username,function(row){
+    dbAPI.query(response.username,function(row){
             if(row == undefined){
                 console.log("Wrong username!");
                 res.send(false);
@@ -84,14 +85,14 @@ app.post('/signup', upload.array(), function(req, res){
         password:formData[0][1]
     };
 
-    dbAPI.query(db,response.username, function(row){
+    dbAPI.query(response.username, function(row){
         if(row == undefined){
             bcrypt.hash(response.password, 10, function(err, hash) {
                 if(err){
                     console.log(err);
                 }
                 console.log("hash:"+hash);
-                dbAPI.insert(db,response.username,hash);
+                dbAPI.insert(response.username,hash);
                 // Store hash in database
             });
             
@@ -128,9 +129,9 @@ app.post('/like', function(req, res){
             res.sendFile(path);
         }
     })
-})
+});
 
-app.post('/updateIndex', function(req, res) {
+app.post('/update_index', function(req, res) {
     db2API.selectAll(db2API.concatData, function(data){
         let address = "http://localhost:" + server.address().port;
         console.log(data[0].imageurl);
@@ -138,8 +139,7 @@ app.post('/updateIndex', function(req, res) {
                 title1:data[0].title,
                 title2:data[1].title,
                 title3:data[2].title,
-                title4:data[3].title,
-                title5:data[4].title});
+            });
     });
 });
 
