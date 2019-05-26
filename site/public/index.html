@@ -264,10 +264,10 @@
 		</div>
 	</body>
 	<script>
-      function changeDom(){
+      function update(){
         //ajax call
          $.ajax({
-                  url: 'http://localhost:3000/updateIndex',
+                  url: 'http://localhost:3000/update_index',
                   method:'POST',
                   data: {list: "some info"}
                 }).done(function(data){
@@ -280,8 +280,6 @@
                         $('#p1').html(data.title1);
                         $('#p2').html(data.title2);
                         $('#p3').html(data.title3);
-                        $('#p4').html(data.title4);
-                        $('#p5').html(data.title5);
                         return;
                     }
                 }).fail(function(){
@@ -290,11 +288,11 @@
                     return;
                 });
         };
-        $
+        
       //trigger change DOM  function
       // $('.trigger').click(function(){
       //    changeDom();
       // });
-      window.onload(changeDom());
+      window.onload(update());
    </script>
 </html>
