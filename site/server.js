@@ -9,6 +9,7 @@ var bcrypt = require('bcrypt');
 // var multipartMiddleware = multipart();
 var multer  = require('multer');
 var upload = multer();
+const fileUpload = require('express-fileupload');
 
 var sqlAPI = require("./sqlAPI.js");
 
@@ -41,6 +42,7 @@ sqlAPI.connect();
 app.use(express.static('public'));
 app.use(urlencodedParser);
 app.use(bodyParser.json());
+app.use(fileUpload());
 
 
 function requireLogin(req, res, next) {
@@ -139,14 +141,12 @@ app.post('/signup', upload.array(), function(req, res){
 
 app.post('/change', function(req, res) {
     sqlAPI.queryAll(sqlSelectLib, function(data){
-        console.log(data[0].imageurl);
         res.send({success: true, data});
     });
 });
 
 app.post('/like', function(req, res){
     let params = [req.body.title, req.body.title];
-    console.log(params);
     sqlAPI.update(sqlUpdateLib,params, function(status){
         if(status){
             let path = __dirname + "/success.html";
@@ -186,6 +186,46 @@ app.post('/file_upload', function(req, res){
             res.end(JSON.stringify(response));
         })
     })
+})
+
+app.post('/insertRecord', function(req, res) {
+    //a variable representation of the files
+    let imageFile = req.files.imagefile;
+    let name = imageFile.name.split('.');
+    let imagePath = "public/images/" + imageFile.name;
+    let i = 1;
+    while(fs.existsSync(imagePath)){
+        imagePath = "public/images/" + name[0] + "(" + i + ")." + name[1];
+        i++;
+    }
+    //Using the files to call upon the method to move that file to a folder
+    imageFile.mv(imagePath, function(error){
+        if(error){
+            console.log("Couldn't upload the image file");
+            console.log(error);
+        }else{
+            console.log("Image file succesfully uploaded.");
+        }
+    });
+    let params = [
+        req.body.title,
+        req.body.stars,
+        'now',
+        "/" + imagePath.split('/')[1] + "/" + imagePath.split('/')[2]
+    ];
+    console.log(params);
+    sqlAPI.insert(sqlInsertLib, params, function(status){
+        if(status){
+            let path = __dirname + "\\public\\display.html";
+            console.log(path);
+            res.sendFile(path);
+        }
+        else{
+            let path = __dirname + "\\public\\display.html";
+            console.log(path);
+            res.sendFile(path);
+        }
+    });
 })
 
 app.all('*', function(req, res) {

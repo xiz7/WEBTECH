@@ -41,25 +41,53 @@
 	<script type="text/javascript" src="js/navbar.js"></script>
 
 		<!-- Main -->
-		<div id="main">
-			<div class="container">
-				<div class="row"> 
+				<!-- Main -->
+				<div id="main">
+						<div class="container">
+							<div class="row"> 
+			
+									<!-- Content -->
+								<div id="content" class="8u skel-cell-important">
+									<section>
+										<header>
+											<h2>Welcome to TG Decoration!</h2>
+										</header>
+										<ul class="mydisplay">
 
-						<!-- Content -->
-					<div id="content" class="8u skel-cell-important">
-						<section>
-							<ul class="mydisplay" >
-							</ul>
-						</section>
+										</ul>
+										</section>
+								</div>
+								<!-- Sidebar -->
+								<div id="sidebar" class="4u">
+									<section>
+										<header>
+											<h2>Upload Your Work</h2>
+										</header>
+										<form action = "/insertRecord" method = "POST" enctype="multipart/form-data">
+											<!--Input validation should be considered-->
+											<!--https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation-->
+											Title: <input type = "text" name = "title" id="title" required /><br/><br/>
+											stars: <input type = "number" name = "stars" id="stars" style="width:120px" required /><br/><br/>
+											image: <input type="file" name = "imagefile" id="imagefile" accept="image/*" required /><br/><br/>
+											<input type = "submit" value = "Submit" /><br/><br/>
+										</form>
+									</section>
+								</div>
+							</div>
+						</div>
 					</div>
-					
-				</div>
-			</div>
-		</div>
 		
 	</body>
 	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
    <script>
+		// $ajax({
+		// 	url:'/insertRecord',
+		// 	method:'POST',
+		// 	enctype:"multipart/form-data",
+		// 	data:{
+		// 		document.getgetElementById
+		// 	}
+		// })
       function changeDom(){
         //ajax call
          $.ajax({
