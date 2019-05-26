@@ -2,17 +2,37 @@ const sqlite3 = require('sqlite3').verbose();
 
 const dbPath = './test.db'
 
-const sqlSelect = "SELECT imageName AS name, comments, date(dateAdded, 'unixepoch') AS dateAdded, " + 
-            "imageurl FROM examples ORDER BY comments DESC;";
-const sqlInsert = "INSERT INTO examples(imageName, comments, dateAdded, imageurl) VALUES(?, ?,strftime('%s',?), ?)";
+const sqlSelect = "SELECT imageName AS name, stars, date(dateAdded, 'unixepoch') AS dateAdded, " + 
+            "imageurl FROM examples ORDER BY stars DESC;";
+const sqlInsert = "INSERT INTO examples(imageName, stars, dateAdded, imageurl) VALUES(?, ?,strftime('%s',?), ?)";
+const sqlLike = "UPDATE examples SET stars = " +
+                    "(SELECT stars FROM examples WHERE imageName = ?) + 1 " +
+                    "WHERE imageName = ?";
 module.exports = {
+
+increLike: function (params, callback){
+    try{
+        var db = connectDB();
+        db.run(sqlLike, params, (err) =>{
+            if(err){
+                console.log(err);
+                callback(false);
+            }
+            else{
+                callback(true);
+            }
+        });
+    } catch(e) {
+        return console.error(e.message);
+    }
+},
 
 concatData: function (allRecords, callback){
     let infoArray = [];
     let i = 0;
     let length = allRecords.length;
     while(i < length){
-        let info = allRecords[i].dateAdded+ ' | (' + allRecords[i].comments+ ') ' + 'comments';
+        let info = allRecords[i].dateAdded+ ' | (' + allRecords[i].stars+ ') ' + 'stars';
         let jsonstring = {info:info, title:allRecords[i].name, imageurl:allRecords[i].imageurl};
         infoArray.push(jsonstring);
         i++;
