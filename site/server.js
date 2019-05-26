@@ -112,10 +112,25 @@ app.post('/change', function(req, res) {
     db2API.selectAll(db2API.concatData, function(data){
         let address = "http://localhost:" + server.address().port;
         console.log(data[0].imageurl);
+        res.send({success: true, data});
     });
 });
 
+app.post('/like', function(req, res){
     let params = [req.body.title, req.body.title];
+    console.log(params);
+    db2API.increLike(params, function(status){
+        if(status){
+            let path = __dirname + "\\success.html";
+            res.sendFile(path);
+        }
+        else{
+            let path = __dirname + "\\failure.html";
+            res.sendFile(path);
+        }
+    })
+});
+
 app.post('/update_index', function(req, res) {
     db2API.selectAll(db2API.concatData, function(data){
         let address = "http://localhost:" + server.address().port;
