@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang='en-GB' xml:lang="en-GB">
+	<head>
+		<title>Thousands Gold Decoration</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href='http://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css' />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
+		<script type="text/javascript" src="js/navbar.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+
+	</head>
+	<body>
+
+		<!-- Header -->
+		<div id="header">
+			<div class="container"> 
+				
+				<!-- Logo -->
+				<div id="logo">
+					<h1><a href="#">Thousands Gold Decoration</a></h1>
+				</div>
+				
+			</div>
+		</div>
+	<!-- Navigation bar -->
+	<nav>		                      
+		<div id = "navbar">
+			<ul>
+				<li><a href="index.html">Homepage</a></li>
+				<li><a href="styles.html">Styles</a></li>
+				<li class="active"><a href="designers.html">Designers</a></li>
+				<input type="text" placeholder="Search.." />
+			</ul>
+		</div>
+	</nav>
+	<script type="text/javascript" src="js/navbar.js"></script>
+
+		<!-- Main -->
+		<div id="main">
+			<div class="container">
+				<div class="row"> 
+
+						<!-- Content -->
+					<div id="content" class="8u skel-cell-important">
+						<section>
+							<ul class="mydisplay" >
+							</ul>
+						</section>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+   <script>
+      function changeDom(){
+        //ajax call
+         $.ajax({
+                  url: 'http://localhost:3000/change',
+                  method:'POST',
+                  data: {list: "some info"}
+                }).done(function(data){
+                    //if we have a successful post request ... 
+                    if(data.success){
+                        //change the DOM &
+                        //set the data in local storage to persist upon page request
+                        //localStorage.setItem("permanentData", data.message);
+												//var savedText = localStorage.getItem("permanentData");
+												let i = 0;
+                        while(i < data.data.length){
+                           let listitem = 
+                              '<li>' +
+                                 '<p class="posted" name="info">' + data.data[i].info + '</p>' +
+                                 '<img class="images" name="img" src="' + data.data[i].imageurl+ '" width="480" height="270" alt=""/>'+
+                                 '<p class="text" name="title">' + data.data[i].title + 
+                                 '<input type="button" class="trigger" id=' + data.data[i].title + ' value = "like" style="float :right; margin-right: 460px;"/></p>' +
+                                 
+                              '</li>';
+                           $('ul.mydisplay').append(listitem);
+                           i++;
+                        }
+                        return;
+                    }
+                }).fail(function(){
+                   //do nothing ....
+                    console.log('failed...');
+                    return;
+                });
+				};
+				$('.mydisplay').on('click', '.trigger', function(event){
+         console.log(event.currentTarget.id);
+         console.log(typeof(event.currentTarget.id));
+         $.ajax({
+                  url: '/like',
+                  method:'POST',
+                  data: {title: event.currentTarget.id}
+         }).done(function(data){
+            console.log("success");
+            location.reload();
+         }).fail(function(err){
+            console.log(err);
+         });
+      });
+
+      if (window.addEventListener) {
+         window.addEventListener('load', changeDom);
+      } else if (window.attachEvent) {
+         window.attachEvent('onload', changeDom);
+      } else { 
+         window.onload = changeDom;
+      }
+   </script>
+</html>
