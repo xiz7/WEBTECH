@@ -34,7 +34,6 @@
 		<div id = "navbar">
 			<ul>
 				<li class="active"><a href="index.html">Homepage</a></li>
-				<li><a href="styles.html">Styles</a></li>
 				<li><div id ="space"><a href="designers.html">My Space</a></div></li>
         		<li><div id = "login"><a href="http://127.0.0.1:3000/login.html">Login/Sign</a></div></li>
         		<li><div id = "uname">user</div></li>
@@ -131,36 +130,36 @@
 								<h2>Style</h2>
 							</header>
 							<ul class="style">
-								<li>
-									<img src="images/america.svg" alt="" />
-									<p class="posted">August 11, 2020  |  (10 )  Comments</p>
-									<p class="text">American</p>
+<!-- 								<li>
+									<img src="" id="img1" alt="" />
+									<p class="posted" id="p1"></p>
+									<p class="text" id="t1">American</p>
 								</li>
 								<li>
-									<img src="images/european.svg" alt="" />
-									<p class="posted">August 11, 2019  |  (20 )  Comments</p>
-									<p class="text">European</p>
+									<img src="" id="img2" alt="" />
+									<p class="posted" id="p2"></p>
+									<p class="text" id="t2">European</p>
 								</li>
 								<li>
-									<img src="images/farmhouse.svg" alt="" />
-									<p class="posted">August 11, 2018  |  (30 )  Comments</p>
-									<p class="text">Farmhouse</p>
+									<img src="" id="img3" alt="" />
+									<p class="posted" id="p3"></p>
+									<p class="text"  id="t3">Farmhouse</p>
 								</li>
 								<li>
-									<img src="images/america.svg" alt="" />
-									<p class="posted">August 11, 2020  |  (10 )  Comments</p>
-									<p class="text">American</p>
+									<img src="" id="img1" alt="" />
+									<p class="posted" id="p1"></p>
+									<p class="text" id="t1">American</p>
 								</li>
 								<li>
-									<img src="images/european.svg" alt="" />
-									<p class="posted">August 11, 2019  |  (20 )  Comments</p>
-									<p class="text">European</p>
+									<img src="" id="img2" alt="" />
+									<p class="posted" id="p2"></p>
+									<p class="text" id="t2">European</p>
 								</li>
 								<li>
-									<img src="images/farmhouse.svg" alt="" />
-									<p class="posted">August 11, 2018  |  (30 )  Comments</p>
-									<p class="text">Farmhouse</p>
-								</li>
+									<img src="" id="img3" alt="" />
+									<p class="posted" id="p3"></p>
+									<p class="text"  id="t3">Farmhouse</p>
+								</li> -->
 							</ul>
 						</section>
 					</div>
@@ -230,8 +229,6 @@
 								<li><a id="p1">1</a></li>
 								<li><a id="p2">2</a></li>
 								<li><a id="p3">3</a></li>
-								<li><a id="p4">4</a></li>
-								<li><a id="p5">5</a></li>
 							</ul>
 						</section>
 					</div>
@@ -239,11 +236,9 @@
 						<section>
 							<h2>Latest Posts</h2>
 							<ul class="default">
-								<li><a id="p1">1</a></li>
-								<li><a id="p2">2</a></li>
-								<li><a id="p3">3</a></li>
-								<li><a id="p4">4</a></li>
-								<li><a id="p5">5</a></li>
+								<li><a id="p4">1</a></li>
+								<li><a id="p5">2</a></li>
+								<li><a id="p6">3</a></li>
 							</ul>
 						</section>
 					</div>
@@ -251,11 +246,9 @@
 						<section>
 							<h2>Latest Posts</h2>
 							<ul class="default">
-								<li><a id="p1">1</a></li>
-								<li><a id="p2">2</a></li>
-								<li><a id="p3">3</a></li>
-								<li><a id="p4">4</a></li>
-								<li><a id="p5">5</a></li>
+								<li><a id="p7">1</a></li>
+								<li><a id="p8">2</a></li>
+								<li><a id="p9">3</a></li>
 							</ul>
 						</section>
 					</div>
@@ -277,9 +270,27 @@
                         //set the data in local storage to persist upon page request
                         //localStorage.setItem("permanentData", data.message);
                         //var savedText = localStorage.getItem("permanentData");
-                        $('#p1').html(data.title1);
-                        $('#p2').html(data.title2);
-                        $('#p3').html(data.title3);
+                        let i = 0;
+                        while(i < data.data.length){
+                           let listitem = 
+                              '<li>' +
+                             '<img class="images" name="img" src="' + data.data[i].imageurl+ '" width="480" height="270" alt=""/>'+
+                                 '<p class="posted" name="info">' + data.data[i].info + '</p>' +
+ 
+                                 '<p class="text" name="title">' + data.data[i].title + 
+                              '</li>';
+                           $('ul.style').append(listitem);
+                           i++;
+                        }
+                        $('#p1').html(data.data[0].title);
+                        $('#p2').html(data.data[0].info);
+                        $('#p3').html(data.data[0].info);
+                        $('#p4').html(data.data[1].title);
+                        $('#p5').html(data.data[1].info);
+                        $('#p6').html(data.data[1].info);
+                        $('#p7').html(data.data[2].title);
+                        $('#p8').html(data.data[2].info);
+                        $('#p9').html(data.data[2].info);
                         return;
                     }
                 }).fail(function(){
