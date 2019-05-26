@@ -48,10 +48,12 @@
                     if (res == "exist")
                         hit.innerHTML = "Username exists, registration failed!"
                     else if (res == "true") {
+
                         hit.innerHTML = "Registration successed! Back in <span id='myspan'>5</span> seconds..."
                         setTimeout("backIndex()", 5000)
-                        var mytime = setInterval("changeSec()",1000);
+                        mytime = setInterval("changeSec()",1000);
                         localStorage.setItem("user",username.value); 
+                        console.log(hit,innerHTML);
                     } else if (res == "false")
                         hit.innerHTML = "Registration failed!"
                 })
@@ -72,7 +74,7 @@
                   if (res == "true") {
                         hit.innerHTML = "Login successed! Back in <span id='myspan'>5</span> seconds..."
                         setTimeout("backIndex()", 5000)
-                        var mytime = setInterval("changeSec()",1000);
+                        mytime = setInterval("changeSec()",1000);
                         localStorage.setItem("user",username.value); 
                     } else if (res == "false")
                         hit.innerHTML = "Login failed!"

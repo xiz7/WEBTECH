@@ -88,7 +88,7 @@ function connectDB(){
     }
 }
 
-function closeDB(){
+function closeDB(db){
     db.close((err) => {
         if(err){
             return console.error(err.message);

@@ -10,28 +10,38 @@ var bcrypt = require('bcrypt');
 var multer  = require('multer');
 var upload = multer();
 
-var dbAPI = require("./dbAPI.js");
-var db2API = require("./db2API.js");
+var sqlAPI = require("./sqlAPI.js");
 
 // create application/x-www-form-urlencoded parder
 var urlencodedParser = bodyParser.urlencoded({extended:false});
 
-// // SQLITE3
-// const sqlite = require('sqlite3').verbose();
-// //open database
-// // var db = new sqlite.Database("./data.db", sqlite.OPEN_READWRITE,(err) => {
-// //     if (err) {
-// //       return console.error(err.message);
-// //     }
-// //     console.log('Connected to the database.');
-// //   });
+var sqlCreateUser = "CREATE TABLE IF NOT EXISTS " +
+    "user(" + 
+    "userID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+    "username VARCHAR(50) UNIQUE NOT NULL, " +
+    "password VARCHAR(50) NOT NULL " +
+    ");"; 
+var sqlDropUser = "DROP TABLE IF EXISTS user;";
+var sqlSelectUser = "SELECT password FROM user WHERE username = ?";
+var sqlSelectLib = "SELECT imageName AS name, stars, date(dateAdded, 'unixepoch') AS dateAdded, " + 
+            "imageurl FROM examples ORDER BY stars DESC;";
+var sqlSelectLibbyDate = "SELECT imageName AS name, stars, date(dateAdded, 'unixepoch') AS dateAdded, " + 
+            "imageurl FROM examples ORDER BY dateAdded DESC;";
+var sqlInsertUser = "INSERT INTO user (username, password) VALUES (?,?)";
+var sqlUpdateLib = "UPDATE examples SET stars = " +
+                    "(SELECT stars FROM examples WHERE imageName = ?) + 1 " +
+                    "WHERE imageName = ?";
+var sqlInsertLib = "INSERT INTO examples(imageName, stars, dateAdded, imageurl) VALUES(?, ?,strftime('%s',?), ?)";
 
-dbAPI.connect();
+
+// Connect to the database
+sqlAPI.connect();
 
 
 app.use(express.static('public'));
 app.use(urlencodedParser);
 app.use(bodyParser.json());
+
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -57,7 +67,7 @@ app.post('/login', upload.array(), function(req, res){
         password:formData[0][1]
     };
     console.log(response);
-    dbAPI.query(response.username,function(row){
+    sqlAPI.queryOne(sqlSelectUser,[response.username],function(row){
             if(row == undefined){
                 console.log("Wrong username!");
                 res.send(false);
@@ -85,19 +95,28 @@ app.post('/signup', upload.array(), function(req, res){
         password:formData[0][1]
     };
 
-    dbAPI.query(response.username, function(row){
+    sqlAPI.queryOne(sqlSelectUser,[response.username], function(row){
         if(row == undefined){
             bcrypt.hash(response.password, 10, function(err, hash) {
                 if(err){
-                    console.log(err);
+                    return console.error(err);
                 }
                 console.log("hash:"+hash);
-                dbAPI.insert(response.username,hash);
                 // Store hash in database
+                sqlAPI.insert(sqlInsertUser,[response.username,hash],function(status){
+                    if(status){
+                        res.send(true);
+                        console.log('Succesfully Inserted.');
+                    }else{
+                        res.send(false);
+                       console.log("Inserted failure.");
+                    }
+
+                });
+                
             });
             
-            console.log("successfully signed!");
-            res.send(true);
+
 
         }else{
                 console.log("Existed username!");
@@ -109,8 +128,7 @@ app.post('/signup', upload.array(), function(req, res){
 });
 
 app.post('/change', function(req, res) {
-    db2API.selectAll(db2API.concatData, function(data){
-        let address = "http://localhost:" + server.address().port;
+    sqlAPI.queryAll(sqlSelectLib, function(data){
         console.log(data[0].imageurl);
         res.send({success: true, data});
     });
@@ -119,30 +137,23 @@ app.post('/change', function(req, res) {
 app.post('/like', function(req, res){
     let params = [req.body.title, req.body.title];
     console.log(params);
-    db2API.increLike(params, function(status){
+    sqlAPI.update(sqlUpdateLib,params, function(status){
         if(status){
-            let path = __dirname + "\\success.html";
+            let path = __dirname + "/success.html";
             res.sendFile(path);
         }
         else{
-            let path = __dirname + "\\failure.html";
+            let path = __dirname + "/failure.html";
             res.sendFile(path);
         }
     })
 });
 
 app.post('/update_index', function(req, res) {
-    db2API.selectAll(db2API.concatData, function(data){
-        let address = "http://localhost:" + server.address().port;
-        console.log(data[0].imageurl);
-        res.send({success: true, 
-                title1:data[0].title,
-                title2:data[1].title,
-                title3:data[2].title,
-            });
+    sqlAPI.queryAll(sqlSelectLibbyDate, function(data){
+        res.send({success: true, data});
     });
 });
-
 
 app.post('/file_upload', function(req, res){
     console.log(req.files.file.name);

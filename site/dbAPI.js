@@ -40,7 +40,7 @@ create: function(){
   });
 },
 
-drop: function(){
+drop: function(table){
     let stmt = "DROP TABLE IF EXISTS user;";
     db.serialize(function (){
       db.run(stmt,(err) => {
@@ -51,6 +51,10 @@ drop: function(){
         );
     });
 },
+
+
+
+
 query: function(username,callback){
     let stmt = db.prepare("SELECT password FROM user WHERE username = ?");
       db.serialize(function (){
