@@ -42,6 +42,18 @@ app.use(express.static('public'));
 app.use(urlencodedParser);
 app.use(bodyParser.json());
 
+
+function requireLogin(req, res, next) {
+  if (req.session.loggedIn) {
+    console.log("pass");
+    next(); // allow the next route to run
+  } else {
+    // require the user to log in
+    res.redirect("/login.html"); // or render a form, etc.
+  }
+}
+
+
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -54,8 +66,9 @@ app.all('*', function(req, res, next) {
 app.get('/login.html', function(req, res){
     res.sendFile(__dirname + "/" + "login.html");
 });
-app.get('/signup.html', function(req, res){
-    res.sendFile(__dirname + "/" + "signup.html");
+
+app.get('/display.html', requireLogin, function(req, res){
+    res.sendFile(__dirname + "/" + "display.html");
 });
 
 app.post('/login', upload.array(), function(req, res){
@@ -115,9 +128,6 @@ app.post('/signup', upload.array(), function(req, res){
                 });
                 
             });
-            
-
-
         }else{
                 console.log("Existed username!");
                 res.send('exist');
@@ -177,6 +187,16 @@ app.post('/file_upload', function(req, res){
         })
     })
 })
+
+app.all('*', function(req, res) {
+    throw new Error("Bad request")
+})
+app.use(function(e, req, res, next) {
+    if (e.message === "Bad request") {
+        res.status(400).json({error: {msg: e.message, stack: e.stack}});
+    }
+});
+
 var server = app.listen(3000,'localhost', function(){
     var host = server.address().address;
     var port = server.address().port;
