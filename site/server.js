@@ -52,8 +52,10 @@ function requireLogin(req, res, next) {
     next(); // allow the next route to run
   }
 }
+app.get('/index', function(req, res){
+     res.sendFile(__dirname + "/public/" + "index.html");
+ });
 app.get('/login', function(req, res){
-    console.log("haha");
      res.sendFile(__dirname + "/public/" + "login.html");
  });
 
