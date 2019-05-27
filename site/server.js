@@ -2,13 +2,14 @@
 
 var express = require('express');
 var app = express();
+var https = require("https");
 var bodyParser = require('body-parser');
 var fs = require("fs");
 var bcrypt = require('bcrypt');
 // var multipart = require('connect-multiparty');
 // var multipartMiddleware = multipart();
-var multer  = require('multer');
-var upload = multer();
+// var multer  = require('multer');
+// var upload = multer();
 const fileUpload = require('express-fileupload');
 
 var sqlAPI = require("./sqlAPI.js");
@@ -16,13 +17,7 @@ var sqlAPI = require("./sqlAPI.js");
 // create application/x-www-form-urlencoded parder
 var urlencodedParser = bodyParser.urlencoded({extended:false});
 
-var sqlCreateUser = "CREATE TABLE IF NOT EXISTS " +
-    "user(" + 
-    "userID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-    "username VARCHAR(50) UNIQUE NOT NULL, " +
-    "password VARCHAR(50) NOT NULL " +
-    ");"; 
-var sqlDropUser = "DROP TABLE IF EXISTS user;";
+
 var sqlSelectUser = "SELECT password FROM user WHERE username = ?";
 var sqlSelectLib = "SELECT imageName AS name, stars, date(dateAdded, 'unixepoch') AS dateAdded, " + 
             "imageurl FROM examples ORDER BY stars DESC;";
@@ -46,12 +41,15 @@ app.use(fileUpload());
 
 
 function requireLogin(req, res, next) {
-  if (req.session.loggedIn) {
+    // require the user to log in
+    var theme=localStorage.getItem("user");
+    if (theme==null||theme=="") {
+    res.redirect("/login.html"); // render a form
+    } else {
+
     console.log("pass");
     next(); // allow the next route to run
-  } else {
-    // require the user to log in
-    res.redirect("/login.html"); // or render a form, etc.
+
   }
 }
 
@@ -65,15 +63,15 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-app.get('/login.html', function(req, res){
-    res.sendFile(__dirname + "/" + "login.html");
-});
+// app.get('/login.html', function(req, res){
+//     res.sendFile(__dirname + "/" + "login.html");
+// });
 
-app.get('/display.html', requireLogin, function(req, res){
-    res.sendFile(__dirname + "/" + "display.html");
-});
+// app.get('/display.html', requireLogin, function(req, res){
+//     res.sendFile(__dirname + "/" + "display.html");
+// });
 
-app.post('/login', upload.array(), function(req, res){
+app.post('/login', function(req, res){
     // Prepare output in JSON format
     let formData = Object.values(req.body);
     console.log('form data:', formData[0]);
@@ -101,10 +99,10 @@ app.post('/login', upload.array(), function(req, res){
         });
     });
 
-app.post('/signup', upload.array(), function(req, res){
+app.post('/signup', function(req, res){
 
     let formData = Object.values(req.body);
-    console.log('form data:', formData[0]);
+    console.log('form data:', formData);
     let response = {
         username:formData[0][0],
         password:formData[0][1]
@@ -147,14 +145,17 @@ app.post('/change', function(req, res) {
 
 app.post('/like', function(req, res){
     let params = [req.body.title, req.body.title];
+    console.log(params);
     sqlAPI.update(sqlUpdateLib,params, function(status){
         if(status){
+            console.log("like updated");
             let path = __dirname + "/success.html";
-            res.sendFile(path);
+            res.send({success:true});
         }
         else{
+            console.log("like updated fail");
             let path = __dirname + "/failure.html";
-            res.sendFile(path);
+            res.send({success:false});
         }
     })
 });
@@ -243,3 +244,11 @@ var server = app.listen(3000,'localhost', function(){
 
     console.log("Example app listening at http://%s:%s", host, port);
 });
+
+// https.createServer({
+//     key: fs.readFileSync('server.key'),
+//     cert: fs.readFileSync('server.crt')
+// }, app)
+// .listen(3001, function(){
+//     console.log("example app listening on 3001");
+// })

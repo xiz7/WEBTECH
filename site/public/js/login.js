@@ -43,7 +43,7 @@
             else if (password.value != con_pass.value)
                 hit.innerHTML = "Two passwords not equal"
             else if (password.value = con_pass.value) {
-                let url = "http://127.0.0.1:3000/signup"
+                let url = "/signup"
                 submit(url,function(res) {
                     if (res == "exist")
                         hit.innerHTML = "Username exists, registration failed!"
@@ -53,7 +53,6 @@
                         setTimeout("backIndex()", 5000)
                         mytime = setInterval("changeSec()",1000);
                         localStorage.setItem("user",username.value); 
-                        console.log(hit,innerHTML);
                     } else if (res == "false")
                         hit.innerHTML = "Registration failed!"
                 })
@@ -69,7 +68,7 @@
 
         if (onoff) {     
                let hit = document.getElementById("hint").getElementsByTagName("p")[0]
-                let url = "http://127.0.0.1:3000/login"
+                let url = "/login"
                 submit(url,function(res) {
                   if (res == "true") {
                         hit.innerHTML = "Login successed! Back in <span id='myspan'>5</span> seconds..."

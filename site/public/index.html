@@ -6,12 +6,14 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
-		<link href='http://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css' />
+<!-- 		<link href='http://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css' /> -->
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
-		<script type="text/javascript" src ="js/userstatus.js"></script>>
+		<script type="text/javascript" src ="js/userstatus.js"></script>
 		<script type="text/javascript" src="js/navbar.js"></script>
+		<span style="white-space:pre">	</span>
+		<link rel="shortcut" href="/favicon.ico"> 
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/banner.css" />
 	</head>
@@ -35,7 +37,11 @@
 			<ul>
 				<li class="active"><a href="index.html">Homepage</a></li>
 				<li><div id ="space"><a href="display.html">My Space</a></div></li>
-        		<li><div id = "login"><a href="http://127.0.0.1:3000/login.html">Login/Sign</a></div></li>
+        		<li><div id = "login"><a href="/login.html">Login/Sign</a></div></li>
+        		<li></li>
+        		<li></li>
+        		<li></li>
+        		<li></li>        		
         		<li><div id = "uname">user</div></li>
         		<li><button type="button" id="exit" class="btn btn-danger" onclick="exitu()">Exit</button> <li>
       			
@@ -130,36 +136,9 @@
 								<h2>Style</h2>
 							</header>
 							<ul class="style">
-<!-- 								<li>
-									<img src="" id="img1" alt="" />
-									<p class="posted" id="p1"></p>
-									<p class="text" id="t1">American</p>
-								</li>
-								<li>
-									<img src="" id="img2" alt="" />
-									<p class="posted" id="p2"></p>
-									<p class="text" id="t2">European</p>
-								</li>
-								<li>
-									<img src="" id="img3" alt="" />
-									<p class="posted" id="p3"></p>
-									<p class="text"  id="t3">Farmhouse</p>
-								</li>
-								<li>
-									<img src="" id="img1" alt="" />
-									<p class="posted" id="p1"></p>
-									<p class="text" id="t1">American</p>
-								</li>
-								<li>
-									<img src="" id="img2" alt="" />
-									<p class="posted" id="p2"></p>
-									<p class="text" id="t2">European</p>
-								</li>
-								<li>
-									<img src="" id="img3" alt="" />
-									<p class="posted" id="p3"></p>
-									<p class="text"  id="t3">Farmhouse</p>
-								</li> -->
+
+							<!-- Dynamic content -->
+
 							</ul>
 						</section>
 					</div>
@@ -260,7 +239,7 @@
       function update(){
         //ajax call
          $.ajax({
-                  url: 'http://localhost:3000/update_index',
+                  url: '/update_index',
                   method:'POST',
                   data: {list: "some info"}
                 }).done(function(data){
@@ -300,10 +279,6 @@
                 });
         };
         
-      //trigger change DOM  function
-      // $('.trigger').click(function(){
-      //    changeDom();
-      // });
       window.onload(update());
    </script>
 </html>
