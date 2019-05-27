@@ -53,7 +53,6 @@
                         setTimeout("backIndex()", 5000)
                         mytime = setInterval("changeSec()",1000);
                         localStorage.setItem("user",username.value); 
-                        console.log(hit,innerHTML);
                     } else if (res == "false")
                         hit.innerHTML = "Registration failed!"
                 })

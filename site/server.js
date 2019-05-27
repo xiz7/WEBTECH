@@ -2,6 +2,7 @@
 
 var express = require('express');
 var app = express();
+var https = require("https");
 var bodyParser = require('body-parser');
 var fs = require("fs");
 var bcrypt = require('bcrypt');
@@ -76,7 +77,7 @@ app.get('/display.html', requireLogin, function(req, res){
     res.sendFile(__dirname + "/" + "display.html");
 });
 
-app.post('/login', upload.array(), function(req, res){
+app.post('/login', function(req, res){
     // Prepare output in JSON format
     let formData = Object.values(req.body);
     console.log('form data:', formData[0]);
@@ -104,10 +105,10 @@ app.post('/login', upload.array(), function(req, res){
         });
     });
 
-app.post('/signup', upload.array(), function(req, res){
+app.post('/signup', function(req, res){
 
     let formData = Object.values(req.body);
-    console.log('form data:', formData[0]);
+    console.log('form data:', formData);
     let response = {
         username:formData[0][0],
         password:formData[0][1]
@@ -240,9 +241,17 @@ app.use(function(e, req, res, next) {
     }
 });
 
-var server = app.listen(3000,'localhost', function(){
-    var host = server.address().address;
-    var port = server.address().port;
+// var server = app.listen(3000,'localhost', function(){
+//     var host = server.address().address;
+//     var port = server.address().port;
 
-    console.log("Example app listening at http://%s:%s", host, port);
-});
+//     console.log("Example app listening at http://%s:%s", host, port);
+// });
+
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.crt')
+}, app)
+.listen(3001, function(){
+    console.log("example app listening on 3001");
+})
