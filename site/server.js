@@ -51,7 +51,6 @@ function requireLogin(req, res, next) {
         console.log("pass");
         next(); // allow the next route to run
     } else {
-
         console.log("not pass");
         res.redirect("/login.html");// render a form
   }
@@ -129,8 +128,8 @@ app.post('/signup', function(req, res){
                 // Store hash in database
                 sqlAPI.insert(sqlInsertUser,[response.username,hash],function(status){
                     if(status){
-                        res.send(true);
                         req.session.userName = response.username;
+                        res.send(true);
                         console.log('Succesfully Inserted.');
                     }else{
                         res.send(false);
