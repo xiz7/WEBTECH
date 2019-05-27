@@ -131,19 +131,19 @@
                 });
 				};
 				$('.mydisplay').on('click', '.trigger', function(event){
-         console.log(event.currentTarget.id);
-         console.log(typeof(event.currentTarget.id));
-         $.ajax({
-                  url: '/like',
-                  method:'POST',
-                  data: {title: event.currentTarget.id}
-         }).done(function(data){
-            console.log("success");
-            location.reload();
-         }).fail(function(err){
-            console.log(err);
-         });
-      });
+					$.ajax({
+								url: '/like',
+								method:'POST',
+								data: {title: event.currentTarget.id}
+					}).done(function(data){
+						console.log(data);
+						if(data.success){
+							location.reload();
+						}
+					}).fail(function(err){
+						console.log(err);
+					});
+				});
 
       if (window.addEventListener) {
          window.addEventListener('load', changeDom);

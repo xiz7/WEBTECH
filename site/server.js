@@ -146,14 +146,17 @@ app.post('/change',function(req, res) {
 
 app.post('/like', function(req, res){
     let params = [req.body.title, req.body.title];
+    console.log(params);
     sqlAPI.update(sqlUpdateLib,params, function(status){
         if(status){
+            console.log("like updated");
             let path = __dirname + "/success.html";
-            res.sendFile(path);
+            res.send({success:true});
         }
         else{
+            console.log("like updated fail");
             let path = __dirname + "/failure.html";
-            res.sendFile(path);
+            res.send({success:false});
         }
     })
 });
