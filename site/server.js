@@ -54,7 +54,7 @@ function requireLogin(req, res, next) {
 }
 app.get('/login', function(req, res){
     console.log("haha");
-     res.sendFile(__dirname + "/" + "login.html");
+     res.sendFile(__dirname + "/public" + "login.html");
  });
 
 app.get('/display', function(req, res){
