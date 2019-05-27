@@ -162,7 +162,6 @@ app.post('/change',function(req, res) {
 
 app.post('/like', function(req, res){
     let params = [req.body.title, req.body.title];
-    console.log(params);
     sqlAPI.update(sqlUpdateLib,params, function(status){
         if(status){
             console.log("like updated");
@@ -232,13 +231,6 @@ app.use(function(e, req, res, next) {
         res.status(400).json({error: {msg: e.message, stack: e.stack}});
     }
 });
-
-// var server = app.listen(3000,'localhost', function(){
-//     var host = server.address().address;
-//     var port = server.address().port;
-
-//     console.log("Example app listening at http://%s:%s", host, port);
-// });
 
 https.createServer({
     key: fs.readFileSync('server.key'),
