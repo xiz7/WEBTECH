@@ -23,3 +23,4 @@ function exitu(){
   load_data();
 
 }
+ 
