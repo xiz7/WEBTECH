@@ -70,13 +70,13 @@
                let hit = document.getElementById("hint").getElementsByTagName("p")[0]
                 let url = "/login"
                 submit(url,function(res) {
-                  if (res == "true") {
+                  if (res == "true", function(){hint()}) {
                         hit.innerHTML = "Login successed! Back in <span id='myspan'>5</span> seconds..."
                         setTimeout("backIndex()", 5000)
                         mytime = setInterval("changeSec()",1000);
                         localStorage.setItem("user",username.value); 
-                        hint()
-                    } else if (res == "false")
+                        
+                    } else if (res == "false",function(){hint()})
                         hit.innerHTML = "Login failed!"
                         hint()
                 })
