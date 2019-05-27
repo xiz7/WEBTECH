@@ -6,6 +6,7 @@ var https = require("https");
 var bodyParser = require('body-parser');
 var fs = require("fs");
 var bcrypt = require('bcrypt');
+var path = require('path');
 // var multipart = require('connect-multiparty');
 // var multipartMiddleware = multipart();
 // var multer  = require('multer');
@@ -51,7 +52,14 @@ function requireLogin(req, res, next) {
     next(); // allow the next route to run
   }
 }
+app.get('/login', function(req, res){
+    console.log("haha");
+     res.sendFile(__dirname + "/" + "login.html");
+ });
 
+app.get('/display', function(req, res){
+     res.sendFile(__dirname + "/" + "display.html");
+ });
 
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -63,16 +71,6 @@ app.all('*', function(req, res, next) {
   next();
 });
 
- app.get('/', function(req, res){
-
-    console.log("happy");
-
-     res.sendFile(__dirname + "/" + "login.html");
- });
-
-// app.get('/display.html', requireLogin, function(req, res){
-//     res.sendFile(__dirname + "/" + "display.html");
-// });
 
 app.post('/login', function(req, res){
     // Prepare output in JSON format
