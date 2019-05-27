@@ -1,5 +1,5 @@
-      window.onload = update;
-     function update(){
+    function update(){
+        console.log("update");
         //ajax call
          $.ajax({
                   url: '/update_index',
