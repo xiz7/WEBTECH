@@ -1,19 +1,15 @@
 "use strict";
 
-var express = require('express');
-var app = express();
-var https = require("https");
-var bodyParser = require('body-parser');
-var fs = require("fs");
-var bcrypt = require('bcrypt');
-var path = require('path');
-// var multipart = require('connect-multiparty');
-// var multipartMiddleware = multipart();
-// var multer  = require('multer');
-// var upload = multer();
+const express = require('express');
+const app = express();
+const https = require("https");
+const bodyParser = require('body-parser');
+const fs = require("fs");
+const bcrypt = require('bcrypt');
+const sqlAPI = require("./sqlAPI.js");
 const fileUpload = require('express-fileupload');
+const session = require('express-session');
 
-var sqlAPI = require("./sqlAPI.js");
 
 // create application/x-www-form-urlencoded parder
 var urlencodedParser = bodyParser.urlencoded({extended:false});
@@ -29,7 +25,7 @@ var sqlUpdateLib = "UPDATE examples SET stars = " +
                     "(SELECT stars FROM examples WHERE imageName = ?) + 1 " +
                     "WHERE imageName = ?";
 var sqlInsertLib = "INSERT INTO examples(imageName, stars, dateAdded, imageurl) VALUES(?, ?,strftime('%s',?), ?)";
-var session = require('express-session');
+
 
 // Connect to the database
 sqlAPI.connect();
@@ -40,6 +36,14 @@ app.use(urlencodedParser);
 app.use(bodyParser.json());
 app.use(fileUpload());
 
+app.use(session({
+    secret :  'secret', // sign related cookie
+    resave : true,
+    saveUninitialized: false, 
+    cookie : {
+        maxAge : 1000 * 60 * 3, // set time
+    },
+}));
 
 function requireLogin(req, res, next) {
     // require the user to log in
@@ -52,16 +56,6 @@ function requireLogin(req, res, next) {
         res.redirect("/login.html");// render a form
   }
 }
-
-app.use(session({
-    secret :  'secret', // 对session id 相关的cookie 进行签名
-    resave : true,
-    saveUninitialized: false, // 是否保存未初始化的会话
-    cookie : {
-        maxAge : 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
-    },
-}));
-
 app.get('/index', function(req, res){
      res.sendFile(__dirname + "/public/" + "index.html");
  });
@@ -269,6 +263,6 @@ https.createServer({
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.crt')
 }, app)
-.listen(3001, function(){
+.listen(3001, 'localhost',function(){
     console.log("example app listening on 3001");
 })
