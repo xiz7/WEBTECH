@@ -9,8 +9,8 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
-		<script type="text/javascript" src ="js/userstatus.js"></script>
-		<script type="text/javascript" src="js/navbar.js"></script>
+		<script src ="js/userstatus.js"></script>
+		<script src="js/navbar.js"></script>
 		<link rel="stylesheet" href="css/style.css" />
 		<span style="white-space:pre">	</span>
 		<link rel="shortcut" href="/favicon.ico"> 
@@ -72,8 +72,6 @@
 											<h2>Upload Your Work</h2>
 										</header>
 										<form action = "/insertRecord" method = "POST" enctype="multipart/form-data">
-											<!--Input validation should be considered-->
-											<!--https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation-->
 											Title: <input type = "text" name = "title" id="title" required /><br/><br/>
 											stars: <input type = "number" name = "stars" id="stars" style="width:120px" required /><br/><br/>
 											image: <input type="file" name = "imagefile" id="imagefile" accept="image/*" required /><br/><br/>
@@ -86,16 +84,7 @@
 					</div>
 		
 	</body>
-	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
    <script>
-		// $ajax({
-		// 	url:'/insertRecord',
-		// 	method:'POST',
-		// 	enctype:"multipart/form-data",
-		// 	data:{
-		// 		document.getgetElementById
-		// 	}
-		// })
       function changeDom(){
         //ajax call
          $.ajax({
@@ -103,13 +92,9 @@
                   method:'POST',
                   data: {list: "some info"}
                 }).done(function(data){
-                    //if we have a successful post request ... 
+                    //if we have a successful post request 
                     if(data.success){
-                        //change the DOM &
-                        //set the data in local storage to persist upon page request
-                        //localStorage.setItem("permanentData", data.message);
-												//var savedText = localStorage.getItem("permanentData");
-												let i = 0;
+								let i = 0;
                         while(i < data.data.length){
                            let listitem = 
                               '<li>' +
