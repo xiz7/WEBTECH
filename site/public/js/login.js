@@ -75,10 +75,12 @@
                         setTimeout("backIndex()", 5000)
                         mytime = setInterval("changeSec()",1000);
                         localStorage.setItem("user",username.value); 
+                        hint()
                     } else if (res == "false")
                         hit.innerHTML = "Login failed!"
+                        hint()
                 })
-                hint()
+                
             
         } else {
             let status = document.getElementById("status").getElementsByTagName("i")
