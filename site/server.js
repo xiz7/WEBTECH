@@ -54,11 +54,11 @@ function requireLogin(req, res, next) {
 }
 app.get('/login', function(req, res){
     console.log("haha");
-     res.sendFile(__dirname + "/public" + "login.html");
+     res.sendFile(__dirname + "/public/" + "login.html");
  });
 
 app.get('/display', function(req, res){
-     res.sendFile(__dirname + "/" + "display.html");
+     res.sendFile(__dirname + "/public/" + "display.html");
  });
 
 app.all('*', function(req, res, next) {
