@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
 keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
  
 [alt_names]
+=======
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+ 
+[alt_names]
+>>>>>>> 1cda5a6b625dd3557e41c3fff551f066ca6c8cad
 DNS.1 = WEBTECH

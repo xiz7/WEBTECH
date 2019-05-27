@@ -44,12 +44,11 @@ function requireLogin(req, res, next) {
     // require the user to log in
     var theme=localStorage.getItem("user");
     if (theme==null||theme=="") {
-    res.redirect("/login.html"); // render a form
+        console.log("not pass");
+        res.redirect("/login.html");// render a form
     } else {
-
     console.log("pass");
     next(); // allow the next route to run
-
   }
 }
 
@@ -60,12 +59,16 @@ app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
   res.header("X-Powered-By", ' 3.2.1');
   // res.header("Content-Type", "application/json;charset=utf-8");
+  console.log(req.url);
   next();
 });
 
-// app.get('/login.html', function(req, res){
-//     res.sendFile(__dirname + "/" + "login.html");
-// });
+ app.get('/', function(req, res){
+
+    console.log("happy");
+
+     res.sendFile(__dirname + "/" + "login.html");
+ });
 
 // app.get('/display.html', requireLogin, function(req, res){
 //     res.sendFile(__dirname + "/" + "display.html");
@@ -137,7 +140,7 @@ app.post('/signup', function(req, res){
     
 });
 
-app.post('/change', function(req, res) {
+app.post('/change',function(req, res) {
     sqlAPI.queryAll(sqlSelectLib, function(data){
         res.send({success: true, data});
     });
@@ -238,17 +241,17 @@ app.use(function(e, req, res, next) {
     }
 });
 
-var server = app.listen(3000,'localhost', function(){
-    var host = server.address().address;
-    var port = server.address().port;
+// var server = app.listen(3000,'localhost', function(){
+//     var host = server.address().address;
+//     var port = server.address().port;
 
-    console.log("Example app listening at http://%s:%s", host, port);
-});
+//     console.log("Example app listening at http://%s:%s", host, port);
+// });
 
-// https.createServer({
-//     key: fs.readFileSync('server.key'),
-//     cert: fs.readFileSync('server.crt')
-// }, app)
-// .listen(3001, function(){
-//     console.log("example app listening on 3001");
-// })
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.crt')
+}, app)
+.listen(3001, function(){
+    console.log("example app listening on 3001");
+})
