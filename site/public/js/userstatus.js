@@ -17,5 +17,9 @@ function load_data(){
 
 function exitu(){
   localStorage.removeItem("user"); 
+  let request = new XMLHttpRequest()
+  request.open("post", "/logout", true);
+  request.send();
   load_data();
+
 }

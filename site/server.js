@@ -29,7 +29,7 @@ var sqlUpdateLib = "UPDATE examples SET stars = " +
                     "(SELECT stars FROM examples WHERE imageName = ?) + 1 " +
                     "WHERE imageName = ?";
 var sqlInsertLib = "INSERT INTO examples(imageName, stars, dateAdded, imageurl) VALUES(?, ?,strftime('%s',?), ?)";
-
+var session = require('express-session');
 
 // Connect to the database
 sqlAPI.connect();
@@ -43,15 +43,25 @@ app.use(fileUpload());
 
 function requireLogin(req, res, next) {
     // require the user to log in
-    var theme=localStorage.getItem("user");
-    if (theme==null||theme=="") {
+    if (req.session.userName){
+        console.log("pass");
+        next(); // allow the next route to run
+    } else {
+
         console.log("not pass");
         res.redirect("/login.html");// render a form
-    } else {
-    console.log("pass");
-    next(); // allow the next route to run
   }
 }
+
+app.use(session({
+    secret :  'secret', // 对session id 相关的cookie 进行签名
+    resave : true,
+    saveUninitialized: false, // 是否保存未初始化的会话
+    cookie : {
+        maxAge : 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
+    },
+}));
+
 app.get('/index', function(req, res){
      res.sendFile(__dirname + "/public/" + "index.html");
  });
@@ -59,8 +69,8 @@ app.get('/login', function(req, res){
      res.sendFile(__dirname + "/public/" + "login.html");
  });
 
-app.get('/display', function(req, res){
-     res.sendFile(__dirname + "/public/" + "display.html");
+app.get('/display',requireLogin,function(req, res){
+     res.sendFile(__dirname + "/public/" + "display.html");  
  });
 
 app.all('*', function(req, res, next) {
@@ -92,6 +102,7 @@ app.post('/login', function(req, res){
                 bcrypt.compare(response.password, row.password, function(err, result) {
                 if(result) {
                     console.log("successfully login");
+                    req.session.userName = response.username;
                     res.send(true);
                 } else {
                     console.log("Wrong password!");
@@ -122,6 +133,7 @@ app.post('/signup', function(req, res){
                 sqlAPI.insert(sqlInsertUser,[response.username,hash],function(status){
                     if(status){
                         res.send(true);
+                        req.session.userName = response.username;
                         console.log('Succesfully Inserted.');
                     }else{
                         res.send(false);
@@ -138,6 +150,11 @@ app.post('/signup', function(req, res){
     });
 
     
+});
+app.post('/logout', function (req, res) {
+    console.log("Log out");
+    req.session.userName = null; // delete session
+    res.redirect('login');
 });
 
 app.post('/change',function(req, res) {
