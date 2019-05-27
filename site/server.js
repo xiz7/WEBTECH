@@ -86,6 +86,9 @@ app.post('/login', function(req, res){
         username:formData[0][0],
         password:formData[0][1]
     };
+    if(!/^[A-Za-z0-9]+$/.test(response.username)){
+        return console.error("Wrong username!");
+    }
     console.log(response);
     sqlAPI.queryOne(sqlSelectUser,[response.username],function(row){
             if(row == undefined){
