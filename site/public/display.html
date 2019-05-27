@@ -6,10 +6,10 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
-		<link href='http://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css' />
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
+		<script type="text/javascript" src ="js/userstatus.js"></script>
 		<script type="text/javascript" src="js/navbar.js"></script>
 		<link rel="stylesheet" href="css/style.css" />
 
@@ -32,13 +32,19 @@
 		<div id = "navbar">
 			<ul>
 				<li><a href="index.html">Homepage</a></li>
-				<li><a href="styles.html">Styles</a></li>
-				<li class="active"><a href="designers.html">Designers</a></li>
-				<input type="text" placeholder="Search.." />
+				<li class = "active"><div id ="space"><a href="display.html">My Space</a></div></li>
+        		<li><div id = "login"><a href="/login.html">Login/Sign</a></div></li>
+        		<li></li>
+        		<li></li
+        		<li></li>
+        		<li></li>        		
+        		<li><div id = "uname">user</div></li>
+        		<li><button type="button" id="exit" class="btn btn-danger" onclick="exitu()">Exit</button> <li>
+      			
 			</ul>
 		</div>
 	</nav>
-	<script type="text/javascript" src="js/navbar.js"></script>
+	<script type="text/javascript" src="js/navbar.js"> load_data(); </script>
 
 		<!-- Main -->
 				<!-- Main -->
@@ -91,7 +97,7 @@
       function changeDom(){
         //ajax call
          $.ajax({
-                  url: 'http://localhost:3000/change',
+                  url: '/change',
                   method:'POST',
                   data: {list: "some info"}
                 }).done(function(data){

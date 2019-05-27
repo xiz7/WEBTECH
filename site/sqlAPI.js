@@ -36,28 +36,6 @@ close: function(){
   });
 },
 
-// create table
-create: function(sql){
-  db.serialize(function (){
-    db.run(sql,(err) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log('Table Created.');}
-      );
-  });
-},
-// drop table
-drop: function(sql){
-    db.serialize(function (){
-      db.run(sql,(err) => {
-        if (err) {
-          return console.error(err.message);
-        }
-        console.log('Table Droped.');}
-        );
-    });
-},
 
 // query data
 queryOne: function(sql,params,callback){

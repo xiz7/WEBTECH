@@ -8,8 +8,8 @@ var fs = require("fs");
 var bcrypt = require('bcrypt');
 // var multipart = require('connect-multiparty');
 // var multipartMiddleware = multipart();
-var multer  = require('multer');
-var upload = multer();
+// var multer  = require('multer');
+// var upload = multer();
 const fileUpload = require('express-fileupload');
 
 var sqlAPI = require("./sqlAPI.js");
@@ -17,13 +17,7 @@ var sqlAPI = require("./sqlAPI.js");
 // create application/x-www-form-urlencoded parder
 var urlencodedParser = bodyParser.urlencoded({extended:false});
 
-var sqlCreateUser = "CREATE TABLE IF NOT EXISTS " +
-    "user(" + 
-    "userID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-    "username VARCHAR(50) UNIQUE NOT NULL, " +
-    "password VARCHAR(50) NOT NULL " +
-    ");"; 
-var sqlDropUser = "DROP TABLE IF EXISTS user;";
+
 var sqlSelectUser = "SELECT password FROM user WHERE username = ?";
 var sqlSelectLib = "SELECT imageName AS name, stars, date(dateAdded, 'unixepoch') AS dateAdded, " + 
             "imageurl FROM examples ORDER BY stars DESC;";
@@ -69,13 +63,13 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-app.get('/login.html', function(req, res){
-    res.sendFile(__dirname + "/" + "login.html");
-});
+// app.get('/login.html', function(req, res){
+//     res.sendFile(__dirname + "/" + "login.html");
+// });
 
-app.get('/display.html', requireLogin, function(req, res){
-    res.sendFile(__dirname + "/" + "display.html");
-});
+// app.get('/display.html', requireLogin, function(req, res){
+//     res.sendFile(__dirname + "/" + "display.html");
+// });
 
 app.post('/login', function(req, res){
     // Prepare output in JSON format
