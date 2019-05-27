@@ -162,7 +162,6 @@ app.post('/change',function(req, res) {
 
 app.post('/like', function(req, res){
     let params = [req.body.title, req.body.title];
-    console.log(params);
     sqlAPI.update(sqlUpdateLib,params, function(status){
         if(status){
             console.log("like updated");
@@ -182,29 +181,6 @@ app.post('/update_index', function(req, res) {
         res.send({success: true, data});
     });
 });
-
-app.post('/file_upload', function(req, res){
-    console.log(req.files.file.name);
-    console.log(req.files.file.path);
-    console.log(req.files.file.type);
-    var file = __dirname + "/" + req.files.file.name;
-
-    fs.readFile(req.files.file.path, function(err, data){
-        fs.writeFile(file, data, function(err){
-            if(err){
-                console.log(err);
-            }
-            else{
-                response = {
-                    message: 'File uploaded successfully',
-                    filename: req.files.file.name
-                };
-            }
-            console.log(response);
-            res.end(JSON.stringify(response));
-        })
-    })
-})
 
 app.post('/insertRecord', function(req, res) {
     //a variable representation of the files
@@ -254,13 +230,6 @@ app.use(function(e, req, res, next) {
         res.status(400).json({error: {msg: e.message, stack: e.stack}});
     }
 });
-
-// var server = app.listen(3000,'localhost', function(){
-//     var host = server.address().address;
-//     var port = server.address().port;
-
-//     console.log("Example app listening at http://%s:%s", host, port);
-// });
 
 https.createServer({
     key: fs.readFileSync('server.key'),
