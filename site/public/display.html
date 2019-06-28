@@ -7,11 +7,11 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/init.js"></script>
-		<script src ="js/userstatus.js"></script>
-		<script src="js/navbar.js"></script>
-		<link rel="stylesheet" href="css/style.css" />
+		<script src="./js/skel.min.js"></script>
+		<script src="./js/init.js"></script>
+		<script src ="../js/userstatus.js"></script>
+		<script src="./js/navbar.js"></script>
+		<link rel="stylesheet" href="./css/style.css" />
 		<span style="white-space:pre">	</span>
 
 	</head>
@@ -50,37 +50,37 @@
 		<!-- Main -->
 				<!-- Main -->
 				<div id="main">
-						<div class="container">
-							<div class="row"> 
-			
-									<!-- Content -->
-								<div id="content" class="8u skel-cell-important">
-									<section>
-										<header>
-											<h2>Welcome to TG Decoration!</h2>
-										</header>
-										<ul class="mydisplay">
+					<div class="container">
+						<div class="row"> 
+		
+								<!-- Content -->
+							<div id="content" class="8u skel-cell-important">
+								<section>
+									<header>
+										<h2>Welcome to TG Decoration!</h2>
+									</header>
+									<ul class="mydisplay">
 
-										</ul>
-										</section>
-								</div>
-								<!-- Sidebar -->
-								<div id="sidebar" class="4u">
-									<section>
-										<header>
-											<h2>Upload Your Work</h2>
-										</header>
-										<form action = "/insertRecord" method = "POST" enctype="multipart/form-data">
-											Title: <input type = "text" name = "title" id="title" required /><br/><br/>
-											stars: <input type = "number" name = "stars" id="stars" style="width:120px" required /><br/><br/>
-											image: <input type="file" name = "imagefile" id="imagefile" accept="image/*" required /><br/><br/>
-											<input type = "submit" value = "Submit" /><br/><br/>
-										</form>
+									</ul>
 									</section>
-								</div>
+							</div>
+							<!-- Sidebar -->
+							<div id="sidebar" class="4u">
+								<section>
+									<header>
+										<h2>Upload Your Work</h2>
+									</header>
+									<form action = "/designers/insertRecord" method = "POST" enctype="multipart/form-data">
+										Title: <input type = "text" name = "title" id="title" required /><br/><br/>
+										stars: <input type = "number" name = "stars" id="stars" style="width:120px" required /><br/><br/>
+										image: <input type="file" name = "imagefile" id="imagefile" accept="image/*" required /><br/><br/>
+										<input type = "submit" value = "Submit" /><br/><br/>
+									</form>
+								</section>
 							</div>
 						</div>
 					</div>
+				</div>
 		
 	</body>
    <script src="./js/display.js"></script>

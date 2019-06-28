@@ -43,12 +43,11 @@
             else if (password.value != con_pass.value)
                 hit.innerHTML = "Two passwords not equal"
             else if (password.value = con_pass.value) {
-                let url = "/signup"
+                let url = "/users/signup"
                 submit(url,function(res) {
                     if (res == "exist")
                         hit.innerHTML = "Username exists, registration failed!"
                     else if (res == "true") {
-
                         hit.innerHTML = "Registration successed! Back in <span id='myspan'>5</span> seconds..."
                         setTimeout("backIndex()", 5000)
                         mytime = setInterval("changeSec()",1000);
@@ -57,7 +56,6 @@
                         hit.innerHTML = "Registration failed!"
                 })
             }
-
             hint()
         }
     }
@@ -65,23 +63,20 @@
 
     //login
     function login() {
-
         if (onoff) {     
                let hit = document.getElementById("hint").getElementsByTagName("p")[0]
-                let url = "/login"
+                let url = "/users/login"
                 submit(url,function(res) {
-                  if (res == "true", function(){hint()}) {
+                  if (res == "true") {
                         hit.innerHTML = "Login successed! Back in <span id='myspan'>5</span> seconds..."
-                        setTimeout("backIndex()", 5000)
+                        setTimeout("backIndex()", 1000)
                         mytime = setInterval("changeSec()",1000);
                         localStorage.setItem("user",username.value); 
-                        
-                    } else if (res == "false",function(){hint()})
+                        localStorage.setItem("timestamp", new Date());
+                    } else if (res == "false")
                         hit.innerHTML = "Login failed!"
                         hint()
                 })
-                
-            
         } else {
             let status = document.getElementById("status").getElementsByTagName("i")
             confirm.style.height = 0
@@ -90,15 +85,16 @@
             onoff = !onoff
         }
     }
+
     function backIndex() {
           clearInterval(mytime);
-          window.open("index.html","_self");
-        }
+          window.open("/","_self");
+    }
+
     function changeSec() {
            $('myspan').innerText=$('myspan').innerText-1;
-        }
+    }
+
     function $(id) {
         return document.getElementById(id);
-      }
-
-
+    }
